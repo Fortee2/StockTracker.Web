@@ -38,12 +38,14 @@
     <None Remove="Mapping\" />
     <None Remove="BAL\" />
     <None Remove="BL\intefaces\" />
+    <None Remove="ClientApp\src\components\securities\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dto\" />
     <Folder Include="Mapping\" />
     <Folder Include="BL\" />
     <Folder Include="BL\intefaces\" />
+    <Folder Include="ClientApp\src\components\securities\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

@@ -10,12 +10,12 @@ namespace StockTracker.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SecuritiesController : ControllerBase
+    public class SecurityController : ControllerBase
     {
         private readonly IBusinessLogic<Securities> securitiesLogic;
-        private readonly ILogger<SecuritiesController> _logger;
+        private readonly ILogger<SecurityController> _logger;
 
-        public SecuritiesController(ILogger<SecuritiesController> logger,
+        public SecurityController(ILogger<SecurityController> logger,
             IBusinessLogic<Securities> businessLogic)
         {
             _logger = logger;

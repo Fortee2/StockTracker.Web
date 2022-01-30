@@ -1,9 +1,11 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { Routes, Route } from "react-router-dom";
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
+import Securities  from './components/Securities';
 import { Counter } from './components/Counter';
+import store from './app/store';
+import { Provider } from 'react-redux';
 
 import './custom.css'
 
@@ -12,13 +14,15 @@ export default class App extends Component {
 
   render () {
     return (
+      <Provider store={store}>
         <Layout>
             <Routes>
                 <Route exact path='/' component={Home} element={<Home />} />
                 <Route path='/counter' component={Counter} element={<Counter />} />
-                <Route path='/fetch-data' component={FetchData} element={<FetchData />} />
+                <Route path='/securities' component={Securities} element={<Securities />} />
             </Routes>
-      </Layout>
+        </Layout>
+      </Provider>
     );
   }
 }
