@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.Web.BL.intefaces;
-using StockTracker.Web.dto;
+using StockTracker.DAL;
+using StockTracker.Web.Repository.intefaces;
+using StockTracker.Domain.DTO;
+using StockTracker.Domain.Entities;
+using AutoMapper;
 
 namespace StockTracker.Web.BL
 {
-	public class ActivitiesLogic:IBusinessLogic<Activity>
+	public class ActivitiesRepository:IActivitiesRepo
 	{
-		public ActivitiesLogic()
+        private ActivitiesDAL dal;
+        IMapper map;
+
+        public ActivitiesRepository(ActivitiesDAL activitiesDal, IMapper mapper)
 		{
+            dal = activitiesDal;
+            map = mapper;
 		}
 
         public void Add(Activity obj)
@@ -26,14 +34,14 @@ namespace StockTracker.Web.BL
             throw new NotImplementedException();
         }
 
-        public Activity Retrieve(int id)
+        public Activities Retrieve(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Activity> RetrieveAll()
+        public List<Activities> RetrieveForId(int securityId)
         {
-            throw new NotImplementedException();
+            return map.Map<List<Domain.Entities.Activity>, List<Domain.DTO.Activities>>(dal.GetList(securityId));
         }
 
         public void Update(Activity obj)

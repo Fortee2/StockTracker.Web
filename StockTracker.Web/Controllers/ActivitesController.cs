@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using StockTracker.Web.Repository.intefaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +13,15 @@ namespace StockTracker.Web.Controllers
     [Route("api/[controller]")]
     public class ActivitesController : Controller
     {
+        private readonly ILogger<ActivitesController> log;
+        private readonly IActivitiesRepo repo;
+
+        public ActivitesController(IActivitiesRepo activitiesRepo, ILogger<ActivitesController> logger)
+        {
+            repo = activitiesRepo;
+            log = logger;
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -20,9 +31,9 @@ namespace StockTracker.Web.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<Domain.DTO.Activities> Get(int id)
         {
-            return "value";
+            return repo.RetrieveForId(id);
         }
 
         // POST api/values

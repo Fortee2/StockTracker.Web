@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockTracker.Web
+namespace StockTracker.Domain.DTO
 {
     public class Securities
     {

@@ -1,17 +1,25 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 export default class StockSymbolsList extends Component{
 
     constructor(props){
         super(props);
-        this.state({symbols:[{synbol:'msft', name:'Microsoft'}, {symbol:'cmx', name:'Carmax'}]})
+        
+    }
+
+    returnSymbols(){
+        return [{synbol:'msft', name:'Microsoft', value: 1}, {symbol:'cmx', name:'Carmax', value: 3}];
+    }
+
+    symbolHasChanged(event){
+        console.log(event.target.selectedOptions[0].value);
     }
 
     render(){
         return(
-            <select>
-                {this.state.symbols.map((symbol)=>{
-                    return <option value={symbol.symbol}>{symbol.name}</option>
+            <select onChange={this.symbolHasChanged}>
+                {this.returnSymbols().map((symbol)=>{
+                    return <option key={symbol.symbol} value={symbol.value}>{symbol.name}</option>
                 })}
             </select>
         );

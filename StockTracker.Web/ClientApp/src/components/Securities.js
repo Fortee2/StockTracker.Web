@@ -56,7 +56,7 @@ class Securities extends Component {
   }
 
   async populateData() {
-    const response = await fetch('Security');
+    const response = await fetch('api/Security');
     const data = await response.json();
     this.updateSecuritiesData(data);
     this.toggleLoadingState();

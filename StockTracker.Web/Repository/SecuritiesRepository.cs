@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.Web.BL.intefaces;
 using StockTracker.DAL;
 using AutoMapper;
 using StockTracker.Database.investing;
+using StockTracker.Domain.DTO;
 using System.Linq;
+using StockTracker.Web.Repository.intefaces;
+using StockTracker.Domain.Entities;
 
 namespace StockTracker.Web.BL
 {
-	public class SecuritiesLogic: IBusinessLogic<Securities>
-	{
+	public class SecuritiesRepository : ISecuritiesRepo
+
+    {
         SecuritiesDAL dAL;
         IMapper map; 
 
-		public SecuritiesLogic(SecuritiesDAL securitiesDAL, IMapper mapper)
+		public SecuritiesRepository(SecuritiesDAL securitiesDAL, IMapper mapper)
 		{
             dAL = securitiesDAL;
             map = mapper;
 		}
 
-        public void Add(Securities obj)
+        public void Add(Ticker obj)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Securities obj)
+        public void Delete(Ticker obj)
         {
             throw new NotImplementedException();
         }
@@ -39,14 +42,14 @@ namespace StockTracker.Web.BL
             throw new NotImplementedException();
         }
 
-        public List<Securities> RetrieveAll()
+        public List<Securities> RetriveveAll()
         {
             var tickers = dAL.GetTickerList();
 
             return map.Map<List<Ticker>, List<Securities>>(tickers.ToList());
         }
 
-        public void Update(Securities obj)
+        public void Update(Ticker obj)
         {
             throw new NotImplementedException();
         }

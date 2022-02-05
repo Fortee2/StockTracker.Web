@@ -4,19 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using StockTracker.Web.BL.intefaces;
+using StockTracker.Web.Repository.intefaces;
+using StockTracker.Domain.DTO;
 
 namespace StockTracker.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SecurityController : ControllerBase
     {
-        private readonly IBusinessLogic<Securities> securitiesLogic;
+        private readonly ISecuritiesRepo securitiesLogic;
         private readonly ILogger<SecurityController> _logger;
 
         public SecurityController(ILogger<SecurityController> logger,
-            IBusinessLogic<Securities> businessLogic)
+            ISecuritiesRepo businessLogic)
         {
             _logger = logger;
             securitiesLogic = businessLogic;
@@ -25,7 +26,7 @@ namespace StockTracker.Web.Controllers
         [HttpGet]
         public List<Securities> Get()
         {
-           return securitiesLogic.RetrieveAll();
+            return securitiesLogic.RetriveveAll();
          
         }
     }

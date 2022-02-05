@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "..\StockTracker
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.DAL", "..\StockTracker.DAL\StockTracker.DAL\StockTracker.DAL.csproj", "{9A826EC3-80FE-480C-B3CE-A7AB8C5EA099}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockerTracker.Domain", "StockerTracker.Domain\StockerTracker.Domain.csproj", "{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9A826EC3-80FE-480C-B3CE-A7AB8C5EA099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A826EC3-80FE-480C-B3CE-A7AB8C5EA099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A826EC3-80FE-480C-B3CE-A7AB8C5EA099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

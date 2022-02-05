@@ -1,9 +1,9 @@
 ﻿using System;
-namespace StockTracker.Web.dto
+namespace StockTracker.Domain.DTO
 {
-	public class Activity
+	public class Activities
 	{
-		public Activity()
+		public Activities()
 		{
 		}
 

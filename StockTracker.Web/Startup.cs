@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StockTracker.Database.investing;
-using MySql.Data.MySqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 using System;
-using StockTracker.Web.BL.intefaces;
 using StockTracker.Web.BL;
+using StockTracker.Web.Repository.intefaces;
 
 namespace StockTracker.Web
 {
@@ -38,9 +34,10 @@ namespace StockTracker.Web
 
             
             services.AddDbContext<InvestingContext>(options => options.UseMySQL(Configuration.GetConnectionString("InvestingDatabase")));
-            services.AddScoped<StockTracker.DAL.SecuritiesDAL>();
-            services.AddScoped<StockTracker.DAL.ActivitiesDAL>();
-            services.AddScoped<IBusinessLogic<Securities>, SecuritiesLogic>();
+            services.AddScoped<DAL.SecuritiesDAL>();
+            services.AddScoped<DAL.ActivitiesDAL>();
+            services.AddScoped<ISecuritiesRepo, SecuritiesRepository>();
+            services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
