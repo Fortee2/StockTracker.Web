@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import {ChartWidgetWithBollinger} from './dashboard/CandlesWithBolinger';
+import { CandleStickChart } from '../charts/CandleStick';
 
 
 export class Home extends Component {
@@ -8,7 +8,7 @@ export class Home extends Component {
   render () {
     return (
       <div>
-        <ChartWidgetWithBollinger />
+        <CandleStickChart />
       </div>
     );
   }

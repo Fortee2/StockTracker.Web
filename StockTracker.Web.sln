@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "..\StockTracker
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.DAL", "..\StockTracker.DAL\StockTracker.DAL\StockTracker.DAL.csproj", "{9A826EC3-80FE-480C-B3CE-A7AB8C5EA099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockerTracker.Domain", "StockerTracker.Domain\StockerTracker.Domain.csproj", "{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Domain", "StockerTracker.Domain\StockTracker.Domain.csproj", "{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

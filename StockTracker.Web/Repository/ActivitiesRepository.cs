@@ -39,6 +39,11 @@ namespace StockTracker.Web.BL
             throw new NotImplementedException();
         }
 
+        public List<CandleStickChart> RetrieveCandleSticks(int securityId)
+        {
+            return map.Map<List<Domain.Entities.Activity>, List<CandleStickChart>>(dal.GetList(securityId));
+        }
+
         public List<Activities> RetrieveForId(int securityId)
         {
             return map.Map<List<Domain.Entities.Activity>, List<Domain.DTO.Activities>>(dal.GetList(securityId));
