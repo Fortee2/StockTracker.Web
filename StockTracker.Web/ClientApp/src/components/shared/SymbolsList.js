@@ -1,13 +1,37 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 
 export default class StockSymbolsList extends Component{
 
     constructor(props){
         super(props);
+
+        this.state = { symbolList: [] };
     }
 
-    returnSymbols(){
-        return [{synbol:'msft', name:'Microsoft', value: 1}, {symbol:'cmx', name:'Carmax', value: 3}];
+    componentDidMount() {
+        this.retrieveSymbols();
+    }
+
+    retrieveSymbols() {
+        fetch('api/security/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not OK');
+                }
+                return response.json();
+            })
+            .then(data => {
+                let collector = [];
+
+                data.map(a => {
+                    collector.push({ symbol: a.symbol, name: a.name, value: a.id });
+                });
+                console.log(collector);
+                this.setState({ symbolList: collector });
+            })
+            .catch(err => console.log(err))
+            ;
+
     }
 
     symbolHasChanged(event, callback){
@@ -20,8 +44,8 @@ export default class StockSymbolsList extends Component{
     render(){
         return(
             <select onChange={e => this.symbolHasChanged(e,this.props.callback)}>
-                {this.returnSymbols().map((symbol)=>{
-                    return <option key={symbol.symbol} value={symbol.value}>{symbol.name}</option>
+                {this.state.symbolList.map((symbol)=>{
+                    return <option key={symbol.symbol} value={symbol.value}>{symbol.symbol} - {symbol.name}</option>
                 })}
             </select>
         );
