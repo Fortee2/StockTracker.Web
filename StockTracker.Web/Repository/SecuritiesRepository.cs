@@ -7,51 +7,26 @@ using StockTracker.Domain.DTO;
 using System.Linq;
 using StockTracker.Web.Repository.intefaces;
 using StockTracker.Domain.Entities;
+using StockTracker.Web.Repository;
 
 namespace StockTracker.Web.BL
 {
-	public class SecuritiesRepository : ISecuritiesRepo
-
+	public class SecuritiesRepository : BaseRepository<Ticker>, ISecuritiesRepo
     {
-        SecuritiesDAL dAL;
-        IMapper map; 
+        readonly IMapper _map; 
 
-		public SecuritiesRepository(SecuritiesDAL securitiesDAL, IMapper mapper)
+		public SecuritiesRepository(InvestingContext context, IMapper mapper):base(context)
 		{
-            dAL = securitiesDAL;
-            map = mapper;
+            _map = mapper;
 		}
 
-        public void Add(Ticker obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Ticker obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Securities Retrieve(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<Securities> RetriveveAll()
         {
-            var tickers = dAL.GetTickerList();
+            var tickers =  from symbols in _dbContext.Tickers
+                                           select symbols;
 
-            return map.Map<List<Ticker>, List<Securities>>(tickers.ToList());
-        }
-
-        public void Update(Ticker obj)
-        {
-            throw new NotImplementedException();
+            return _map.Map<List<Ticker>, List<Securities>>(tickers.ToList());
         }
     }
 }

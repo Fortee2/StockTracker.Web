@@ -34,8 +34,7 @@ namespace StockTracker.Web
 
             
             services.AddDbContext<InvestingContext>(options => options.UseMySQL(Configuration.GetConnectionString("InvestingDatabase")));
-            services.AddScoped<DAL.SecuritiesDAL>();
-            services.AddScoped<DAL.ActivitiesDAL>();
+
             services.AddScoped<ISecuritiesRepo, SecuritiesRepository>();
             services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
 
