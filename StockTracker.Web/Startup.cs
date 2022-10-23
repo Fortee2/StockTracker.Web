@@ -7,7 +7,9 @@ using StockTracker.Database.investing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using StockTracker.Web.BL;
-using StockTracker.Web.Repository.intefaces;
+using StockTracker.Web.Repository.Interfaces;
+using StockTracker.Web.Repository;
+using StockTracker.Web.Services.Interfaces;
 
 namespace StockTracker.Web
 {
@@ -37,6 +39,8 @@ namespace StockTracker.Web
 
             services.AddScoped<ISecuritiesRepo, SecuritiesRepository>();
             services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
+            services.AddScoped<IAveragesRepo, AveragesRepository>();
+            services.AddScoped<IAverageService, AveragesService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }

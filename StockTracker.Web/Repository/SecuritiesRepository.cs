@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.DAL;
 using AutoMapper;
 using StockTracker.Database.investing;
 using StockTracker.Domain.DTO;
 using System.Linq;
-using StockTracker.Web.Repository.intefaces;
+using StockTracker.Web.Repository.Interfaces;
 using StockTracker.Domain.Entities;
 using StockTracker.Web.Repository;
 

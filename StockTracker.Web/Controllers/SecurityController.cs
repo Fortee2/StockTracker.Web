@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using StockTracker.Web.Repository.intefaces;
+using StockTracker.Web.Repository.Interfaces;
 using StockTracker.Domain.DTO;
 
 namespace StockTracker.Web.Controllers

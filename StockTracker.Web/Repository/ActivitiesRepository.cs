@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.DAL;
-using StockTracker.Web.Repository.intefaces;
+using StockTracker.Web.Repository.Interfaces;
 using StockTracker.Domain.DTO;
 using StockTracker.Domain.Entities;
 using AutoMapper;
@@ -10,6 +9,7 @@ using System.Linq;
 using StockTracker.Database.investing;
 using StockTracker.Web.Repository;
 using Microsoft.Extensions.Options;
+using System.Collections;
 
 namespace StockTracker.Web.BL
 {
@@ -45,7 +45,14 @@ namespace StockTracker.Web.BL
                     select tradingActivity).ToList();
         }
 
-    
+        public List<Activity> GetActivitiesFrom(int tickerId, DateTime lastDate)
+        {
+            return (from tradingActivity in _dbContext.Activities
+                    where tradingActivity.TickerId == tickerId
+                        && tradingActivity.ActivityDate > lastDate
+                    orderby tradingActivity.ActivityDate 
+                    select tradingActivity).ToList();
+        }
     }
 }
 

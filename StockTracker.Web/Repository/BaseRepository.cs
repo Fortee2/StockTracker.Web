@@ -1,6 +1,6 @@
 ﻿using System;
 using StockTracker.Database.investing;
-using StockTracker.Web.Repository.intefaces;
+using StockTracker.Web.Repository.Interfaces;
 using System.Linq;
 
 namespace StockTracker.Web.Repository

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StockTracker.Web.Repository.intefaces
+namespace StockTracker.Web.Repository.Interfaces
 {
     public interface ISecuritiesRepo:IRespoitory<Domain.Entities.Ticker>
     {

@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\StockTracker.DAL\StockTracker.DAL\StockTracker.DAL.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="MySql.EntityFrameworkCore" />
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
@@ -35,11 +30,27 @@
     <None Remove="BAL\" />
     <None Remove="ClientApp\src\components\securities\" />
     <None Remove="Repository\intefaces\common\" />
+    <None Remove="Services\" />
+    <None Remove="enumerstions\" />
+    <None Remove="Services\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mapping\" />
     <Folder Include="ClientApp\src\components\securities\" />
-    <Folder Include="Repository\intefaces\common\" />
+    <Folder Include="Services\" />
+    <Folder Include="enumerstions\" />
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\StockTracker\Core\StockTracker.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StockTracker.Analyzer\StockTracker.Analysis\Database\Database.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\StockerTracker.Domain\StockTracker.Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
