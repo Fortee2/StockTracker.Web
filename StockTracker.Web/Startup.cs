@@ -10,6 +10,8 @@ using StockTracker.Web.BL;
 using StockTracker.Web.Repository.Interfaces;
 using StockTracker.Web.Repository;
 using StockTracker.Web.Services.Interfaces;
+using StockTracker.Web.Services;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace StockTracker.Web
 {
@@ -41,7 +43,6 @@ namespace StockTracker.Web
             services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
             services.AddScoped<IAveragesRepo, AveragesRepository>();
             services.AddScoped<IAverageService, AveragesService>();
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
@@ -78,7 +79,7 @@ namespace StockTracker.Web
 
                 if (env.IsDevelopment())
                 {
-                    //  spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseReactDevelopmentServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
                 }
             });

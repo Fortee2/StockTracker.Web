@@ -7,8 +7,8 @@ namespace StockTracker.Web.Repository.Interfaces
 {
 	public interface IAveragesRepo: IRespoitory<Domain.Entities.Averages>
     {
-        EMADto RetrieveLastEMA(int tickerId, AverageTypes averageType);
-        List<EMADto> RetrieveDataForPriceCalculations(int tickerId, AverageTypes averageType);
+        MADto RetrieveLastAverage(int tickerId, AverageTypes averageType);
+        List<MADto> RetrieveDataForPriceCalculations(int tickerId, AverageTypes averageType);
 
     }
 

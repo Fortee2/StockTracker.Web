@@ -2,6 +2,7 @@
 using StockTracker.Database.investing;
 using StockTracker.Web.Repository.Interfaces;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace StockTracker.Web.Repository
 {
@@ -17,6 +18,12 @@ namespace StockTracker.Web.Repository
         public void Add(T obj)
         {
             _dbContext.Add(obj);
+            _dbContext.SaveChanges();
+        }
+
+        public void AddRange(List<T> values)
+        {
+            _dbContext.AddRange(values);
             _dbContext.SaveChanges();
         }
 

@@ -26,29 +26,45 @@ namespace StockTracker.Web
 			_mapper = mapper;
 		}
 
-		public List<EMADto> CalculateEMA(List<EMADto> eMAs)
+		public List<MADto> CalculateEMA(List<MADto> eMAs, ushort numberOfPeriods)
 		{
-			if (eMAs.Count == 0) return new List<EMADto>();
+			if (eMAs.Count == 0) return new List<MADto>();
 
-			List<EMAData> eMAData = _mapper.Map<List<EMADto>, List<EMAData>>(eMAs);
+			List<ITradingStructure> eMAData = new();
+			eMAData.AddRange(_mapper.Map<List<MADto>, List<MAData>>(eMAs));
 
-			ExponetialMovingAverage exponetialMovingAverage = new Core.Calculations.ExponetialMovingAverage((IList<ITradingStructure>)eMAData);
+			ExponetialMovingAverage exponetialMovingAverage = new Core.Calculations.ExponetialMovingAverage(eMAData);
 
-			exponetialMovingAverage.NumberOfPeriods = 12;
-			exponetialMovingAverage.ColumnPreviousEma = "PrevEMA";
+			exponetialMovingAverage.NumberOfPeriods = numberOfPeriods;
+			exponetialMovingAverage.ColumnPreviousEma = "PrevMA";
 			exponetialMovingAverage.ColumnToAvg = "CalculateValue";
 
             var resp =  exponetialMovingAverage.Calculate();
 
-			List<EMADto> dtos = new List<EMADto>();
+			List<MADto> dtos = new List<MADto>();
 
 			foreach(IResponse response in resp)
 			{
-				dtos.Add(new EMADto(response.ActivityDate, 0,response.GetDecimalValue("Value")));
+				dtos.Add(new MADto(response.ActivityDate, 0,response.GetDecimalValue("Value")));
 			}
 
 			return dtos;
         }
+
+		public List<IResponse> CalculateMoveingAverage(List<MADto> MAs, ushort numberOfPeriods)
+		{
+            if (MAs.Count == 0) return new List<IResponse>();
+
+            List<ITradingStructure> mAData = new();
+            mAData.AddRange(_mapper.Map<List<MADto>, List<MAData>>(MAs));
+
+            MovingAveraage movingAveraage = new MovingAveraage((IList<ITradingStructure>)mAData);
+
+			movingAveraage.NumberOfPeriods = numberOfPeriods;
+            movingAveraage.ColumnToAvg = "CalculateValue";
+
+            return movingAveraage.Calculate();
+		}
 	}
 }
 

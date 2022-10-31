@@ -8,10 +8,10 @@ namespace StockTracker.Web.Mapping
 	{
 		public EMADtoMapper()
 		{
-            CreateMap<EMADto, StockTracker.Core.Domain.EMAData>()
+            CreateMap<MADto, StockTracker.Core.Domain.MAData>()
 			   .ForMember(dest => dest.ActivityDate, source => source.MapFrom(s=>s.ActivityDate))
 			   .ForMember(dest => dest.CalculateValue, source => source.MapFrom(s=> s.CalculateValue))
-			   .ForMember(dest => dest.PrevEMA, source => source.MapFrom(s=> s.PreviousEMA))
+			   .ForMember(dest => dest.PrevMA, source => source.MapFrom(s=> s.PreviousMA))
 			   .ReverseMap();
         }
 	}

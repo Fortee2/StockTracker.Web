@@ -1,18 +1,18 @@
 ﻿using System;
 namespace StockTracker.Domain.dto
 {
-	public class EMADto
+	public class MADto
 	{
-        public EMADto( DateTime activityDate, decimal previousEMA, decimal calculateValue) : base()
+        public MADto( DateTime activityDate, decimal previousMA, decimal calculateValue) : base()
         {
             ActivityDate = activityDate;
-            PreviousEMA = previousEMA;
+            PreviousMA = previousMA;
             CalculateValue = calculateValue;
         }
 
         //Properties
         public DateTime ActivityDate { get; set; }
-        public decimal PreviousEMA { get; set; }
+        public decimal PreviousMA { get; set; }
         public decimal CalculateValue { get; set; }
     }
 }

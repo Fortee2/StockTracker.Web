@@ -6,6 +6,7 @@ using System.Linq;
 using StockTracker.Domain.Enumerations;
 using StockTracker.Domain.dto;
 using StockTracker.Web.Repository.Interfaces;
+using StockTracker.Core.Domain;
 
 namespace StockTracker.Web.Repository
 {
@@ -15,13 +16,13 @@ namespace StockTracker.Web.Repository
 		{
 		}
 
-		public EMADto RetrieveLastEMA(int tickerId, AverageTypes averageType)
+		public MADto RetrieveLastAverage(int tickerId, AverageTypes averageType)
 		{
 			var data = (from ema in _dbContext.Averages
 					   where ema.AverageType == averageType.ToString()
 							&& ema.TickerId == tickerId
                        orderby ema.ActivityDate descending
-					   select (new EMADto(ema.ActivityDate, ema.Value ?? 0, 0)))
+					   select (new MADto(ema.ActivityDate, ema.Value ?? 0, 0)))
 					   .Take(1)
 					   ;
 
@@ -29,11 +30,11 @@ namespace StockTracker.Web.Repository
 			return data.SingleOrDefault();
 		}
 
-		public List<EMADto> RetrieveDataForPriceCalculations(int tickerId, AverageTypes averageType)
+		public List<MADto> RetrieveDataForPriceCalculations(int tickerId, AverageTypes averageType)
 		{
-			var collection = new List<EMADto>();
+			var collection = new List<MADto>();
 
-			EMADto previous = RetrieveLastEMA(tickerId, averageType);
+			MADto previous = RetrieveLastAverage(tickerId, averageType);
 			DateTime startTime =  (previous == null) ? DateTime.UnixEpoch : previous.ActivityDate;
 
 			if (previous != null) collection.Add(previous);
@@ -44,14 +45,13 @@ namespace StockTracker.Web.Repository
 								&& quotes.ActivityDate > startTime
 							)
                         orderby quotes.ActivityDate
-                        select (new EMADto(quotes.ActivityDate, 0, quotes.Close)))
+                        select (new MADto(quotes.ActivityDate, 0, quotes.Close)))
 			;
 
 			collection.AddRange(data.ToList());
 
 			return collection;
         }
-
     }
 }
 
