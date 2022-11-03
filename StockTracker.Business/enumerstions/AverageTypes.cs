@@ -1,5 +1,5 @@
 ﻿using System;
-namespace StockTracker.Domain.Enumerations
+namespace StockTracker.Business.Enumerations
 {
 	public enum AverageTypes
 	{
@@ -10,6 +10,8 @@ namespace StockTracker.Domain.Enumerations
 		EMA12,
 		EMA26,
 		MA9,
+		EMA9,
+		VOL90
 	}
 }
 

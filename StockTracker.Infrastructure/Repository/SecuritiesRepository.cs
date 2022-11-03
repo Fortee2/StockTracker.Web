@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using AutoMapper;
 using StockTracker.Database.investing;
-using StockTracker.Domain.DTO;
 using System.Linq;
-using StockTracker.Web.Repository.Interfaces;
+using StockTracker.Infrastructure.Repository.Interfaces;
 using StockTracker.Domain.Entities;
-using StockTracker.Web.Repository;
 
-namespace StockTracker.Web.BL
+
+namespace StockTracker.Infrastructure.Repository
 {
 	public class SecuritiesRepository : BaseRepository<Ticker>, ISecuritiesRepo
     {
@@ -20,12 +19,12 @@ namespace StockTracker.Web.BL
 		}
 
 
-        public List<Securities> RetriveveAll()
+        public List<Ticker> RetriveveAll()
         {
             var tickers =  from symbols in _dbContext.Tickers
-                                           select symbols;
+                            select symbols;
 
-            return _map.Map<List<Ticker>, List<Securities>>(tickers.ToList());
+            return tickers.ToList();
         }
     }
 }

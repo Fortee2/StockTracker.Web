@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockTracker.Domain.DTO
+namespace StockTracker.Business.DTO
 {
     public class Securities
     {

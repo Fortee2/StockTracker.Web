@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using StockTracker.Domain.DTO;
+using StockTracker.Business.DTO;
 using StockTracker.Domain.Entities;
 
 namespace StockTracker.Web.Mapping

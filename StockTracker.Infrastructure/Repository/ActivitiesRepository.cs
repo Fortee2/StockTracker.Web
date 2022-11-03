@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.Web.Repository.Interfaces;
-using StockTracker.Domain.DTO;
 using StockTracker.Domain.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using StockTracker.Database.investing;
-using StockTracker.Web.Repository;
+using StockTracker.Infrastructure.Repository;
 using Microsoft.Extensions.Options;
 using System.Collections;
+using StockTracker.Infrastructure.Repository.Interfaces;
 
-namespace StockTracker.Web.BL
+namespace StockTracker.Infrastructure.Repository
 {
 	public partial class ActivitiesRepository: BaseRepository<Activity>, IActivitiesRepo
 	{
@@ -22,16 +21,6 @@ namespace StockTracker.Web.BL
             _map = mapper;
 		}
 
-
-        public List<CandleStickChart> RetrieveCandleSticks(int securityId)
-        {
-            return _map.Map<List<Domain.Entities.Activity>, List<CandleStickChart>>(this.GetList(securityId));
-        }
-
-        public List<Activities> RetrieveForId(int securityId)
-        {
-            return _map.Map<List<Domain.Entities.Activity>, List<Domain.DTO.Activities>>(this.GetList(securityId));
-        }
 
         public List<Activity> GetList(int tickerId, int numberOfDays = 60)
         {

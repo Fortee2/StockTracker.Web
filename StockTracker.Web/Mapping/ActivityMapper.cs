@@ -9,7 +9,7 @@ namespace StockTracker.Web.Mapping
 	{
 		public ActivityMapper()
 		{
-			CreateMap<Activity,Domain.DTO.Activities>()
+			CreateMap<Activity,Business.DTO.Activities>()
 			   .ForMember(dest => dest.Date, source => source.MapFrom(source => source.ActivityDate))
 			   .ForMember(dest => dest.SecurityId, source => source.MapFrom(source => source.TickerId))
 			   .ReverseMap();

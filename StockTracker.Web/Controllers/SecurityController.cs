@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using StockTracker.Web.Repository.Interfaces;
-using StockTracker.Domain.DTO;
+using  StockTracker.Infrastructure.Repository.Interfaces;
+using StockTracker.Business.DTO;
+using StockTracker.Business.Services.Interfaces;
 
 namespace StockTracker.Web.Controllers
 {
@@ -13,11 +14,11 @@ namespace StockTracker.Web.Controllers
     [Route("api/[controller]")]
     public class SecurityController : ControllerBase
     {
-        private readonly ISecuritiesRepo securitiesLogic;
+        private readonly ISecuritiesService securitiesLogic;
         private readonly ILogger<SecurityController> _logger;
 
         public SecurityController(ILogger<SecurityController> logger,
-            ISecuritiesRepo businessLogic)
+            ISecuritiesService businessLogic)
         {
             _logger = logger;
             securitiesLogic = businessLogic;

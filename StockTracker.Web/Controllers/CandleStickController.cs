@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using StockTracker.Web.Repository.Interfaces;
+using StockTracker.Business.DTO;
+using StockTracker.Business.Services.Interfaces;
+using  StockTracker.Infrastructure.Repository.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,19 +17,20 @@ namespace StockTracker.Web.Controllers
     {
 
         private readonly ILogger<CandleStickController> log;
-        private readonly IActivitiesRepo repo;
+        private readonly IChartService _chartService;
 
-        public CandleStickController(IActivitiesRepo activitiesRepo, ILogger<CandleStickController> logger)
+        public CandleStickController(IChartService chartService, ILogger<CandleStickController> logger)
         {
-            repo = activitiesRepo;
             log = logger;
+            _chartService = chartService;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public List<Domain.DTO.CandleStickChart> GetForCandleStick(int id)
+        public List<CandleStickChart> GetForCandleStick(int id)
         {
-            return repo.RetrieveCandleSticks(id);
+            //TODO: Update the front end to all number of days to passed in
+            return _chartService.RetrieveCandleSticks(id, 90);
         }
 
     }

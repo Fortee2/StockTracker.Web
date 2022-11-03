@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using MySqlX.XDevAPI.Common;
 using StockTracker.Core.Calculations.Response;
 using StockTracker.Core.Interfaces.Calculations;
-using StockTracker.Domain.dto;
-using StockTracker.Domain.DTO;
+using StockTracker.Business.DTO;
 using StockTracker.Domain.Entities;
-using StockTracker.Domain.Enumerations;
-using StockTracker.Web.Repository.Interfaces;
-using StockTracker.Web.Services.Interfaces;
+using StockTracker.Business.Enumerations;
+using  StockTracker.Infrastructure.Repository.Interfaces;
+using StockTracker.Business.Services.Interfaces;
+using StockTracker.Business.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,128 +23,35 @@ namespace StockTracker.Web.Controllers
     [Route("api/[controller]")]
     public class AveragesController : Controller
     {
-        private IAveragesRepo _repo;
+        private readonly IAveragesRepo _repo;
         private readonly IAverageService _averageService;
-        private ISecuritiesRepo _securitiesRepo;
-        private readonly Dictionary<ushort, AverageTypes> _hashTable = new Dictionary<ushort, AverageTypes>();
+        private readonly ISecuritiesService _securitiesService;
 
-        public AveragesController(IAveragesRepo repo, IAverageService averageService, ISecuritiesRepo securitiesRepo)
+
+        public AveragesController(IAveragesRepo repo, IAverageService averageService, ISecuritiesService securitiesRepo)
         {
             _repo = repo;
             _averageService = averageService;
-            _securitiesRepo = securitiesRepo;
-
-            LoadDictionary();
+            _securitiesService = securitiesRepo;
         }
 
         
         [HttpGet()]
         public List<MADto> GetMovingAverages(int tickerId, AverageTypes averageTypeEnum )
         {
-            return _repo.RetrieveDataForPriceCalculations(tickerId, averageTypeEnum);
+            //TODO:  Fix hard code number of periods.
+            return _averageService.RetrieveDataForAverageCalculations(tickerId, averageTypeEnum,9);
         }
 
         [HttpGet("[action]")]
         public  IActionResult UpdateMovingAverages()
         {
-            var tickers = _securitiesRepo.RetriveveAll();
-            ProcessAverages(tickers);
+            var tickers = _securitiesService.RetriveveAll();
+            _averageService.CalculateAllAverages(tickers);
 
             return Ok();
         }
 
-        private void ProcessAverages(List<Securities> tickers)
-        {
-           
-            foreach (var i in _hashTable)
-            {
-                List<Averages> averageRange = new List<Averages>();
-
-                foreach (var symbol in tickers)
-                {
-                    var data = _repo.RetrieveDataForPriceCalculations(symbol.Id, i.Value);
-
-                    if (data.Count() <= 1) continue;  //Averages are up to date or no data available
-
-                    if (i.Value.ToString().Contains("EMA"))
-                    {
-                        averageRange.AddRange(
-                            ConvertToAverageEntity(
-                                _averageService.CalculateEMA(data, i.Key),
-                                symbol,
-                                i.Value
-                            )
-                        );
-
-                        continue;
-                    }
-
-                    averageRange.AddRange(
-                        ConvertToAverageEntity(
-                            _averageService.CalculateMoveingAverage(data, i.Key),
-                            symbol,
-                            i.Value
-                        )
-                    );
-
-                }
-
-                if (averageRange.Count() > 0)
-                {
-                    _repo.AddRange(averageRange);
-                }
-            }
-        }
-
-        private List<Averages> ConvertToAverageEntity(List<MADto> dtoResults, Securities symbol, AverageTypes averageTypes)
-        {
-            List<Averages> averageRange = new List<Averages>();
-
-            foreach (var result in dtoResults)
-            {
-                if (result.PreviousMA == 0) //Newly calculated value
-                {
-                    averageRange.Add(new Averages()
-                    {
-                        ActivityDate = result.ActivityDate,
-                        TickerId = symbol.Id,
-                        Value = result.CalculateValue,
-                        AverageType = averageTypes.ToString()
-                    });
-                }
-            }
-
-            return averageRange;
-        }
-
-        private List<Averages> ConvertToAverageEntity(List<IResponse> dtoResults, Securities symbol, AverageTypes averageTypes)
-        {
-            List<Averages> averageRange = new List<Averages>();
-
-            foreach (AverageResponse result in dtoResults)
-            {
-                averageRange.Add(new Averages()
-                {
-                    ActivityDate = result.ActivityDate,
-                    TickerId = symbol.Id,
-                    Value = result.Value,
-                    AverageType = averageTypes.ToString()
-                });
-            }
-
-            return averageRange;
-        }
-
-        private void LoadDictionary()
-        {
-            _hashTable.Add(12, AverageTypes.EMA12);
-            _hashTable.Add(26, AverageTypes.EMA26);
-            _hashTable.Add(9, AverageTypes.MA9);
-            _hashTable.Add(7, AverageTypes.MA7);
-            _hashTable.Add(14, AverageTypes.MA14);
-            _hashTable.Add(21, AverageTypes.MA21);
-            _hashTable.Add(50, AverageTypes.MA50);
-        }
     }
 }
 

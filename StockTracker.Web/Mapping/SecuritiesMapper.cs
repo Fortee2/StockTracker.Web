@@ -2,7 +2,7 @@
 using AutoMapper;
 using StockTracker.Database.investing;
 using StockTracker.Domain.Entities;
-using StockTracker.Domain.DTO;
+using StockTracker.Business.DTO;
 
 namespace StockTracker.Web.Mapping
 {

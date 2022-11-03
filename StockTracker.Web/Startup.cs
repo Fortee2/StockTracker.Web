@@ -6,11 +6,10 @@ using Microsoft.Extensions.Hosting;
 using StockTracker.Database.investing;
 using Microsoft.EntityFrameworkCore;
 using System;
-using StockTracker.Web.BL;
-using StockTracker.Web.Repository.Interfaces;
-using StockTracker.Web.Repository;
-using StockTracker.Web.Services.Interfaces;
-using StockTracker.Web.Services;
+using StockTracker.Infrastructure.Repository.Interfaces;
+using StockTracker.Infrastructure.Repository;
+using StockTracker.Business.Services.Interfaces;
+using StockTracker.Business.Services;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace StockTracker.Web
@@ -41,6 +40,8 @@ namespace StockTracker.Web
 
             services.AddScoped<ISecuritiesRepo, SecuritiesRepository>();
             services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
+            services.AddScoped<ISecuritiesService, SecuritiesService>();
+            services.AddScoped<IChartService, ChartService>();
             services.AddScoped<IAveragesRepo, AveragesRepository>();
             services.AddScoped<IAverageService, AveragesService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

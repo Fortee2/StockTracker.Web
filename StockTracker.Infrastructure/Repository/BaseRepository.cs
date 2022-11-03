@@ -1,13 +1,14 @@
 ﻿using System;
 using StockTracker.Database.investing;
-using StockTracker.Web.Repository.Interfaces;
+using StockTracker.Infrastructure.Repository.Interfaces;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace StockTracker.Web.Repository
+namespace StockTracker.Infrastructure.Repository
 {
 	public partial class 
-            BaseRepository<T>: IRespoitory<T> where T : class 	{
+
+        BaseRepository<T>: IRespoitory<T> where T : class 	{
         protected InvestingContext _dbContext;
          
 		public BaseRepository(InvestingContext context)
@@ -54,6 +55,11 @@ namespace StockTracker.Web.Repository
         {
             _dbContext.Update(obj);
             _dbContext.SaveChanges();
+        }
+
+        public InvestingContext GetDbContext()
+        {
+            return _dbContext;
         }
     }
 }

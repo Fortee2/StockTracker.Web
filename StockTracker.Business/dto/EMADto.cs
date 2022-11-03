@@ -1,5 +1,5 @@
 ﻿using System;
-namespace StockTracker.Domain.dto
+namespace StockTracker.Business.DTO
 {
 	public class MADto
 	{

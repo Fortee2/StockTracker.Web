@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using StockTracker.Database.investing;
 
-namespace StockTracker.Web.Repository.Interfaces
+namespace StockTracker.Infrastructure.Repository.Interfaces
 {
 	public interface IRespoitory<T>
 	{
@@ -10,6 +11,8 @@ namespace StockTracker.Web.Repository.Interfaces
 		void Delete(T obj);
 		void Delete(int id);
 		void AddRange(List<T> values);
+
+        InvestingContext GetDbContext();
 
 		T FindById(int Id);
 	}
