@@ -26,12 +26,13 @@ namespace StockTracker.Web.Controllers
         private readonly IAveragesRepo _repo;
         private readonly IAverageService _averageService;
         private readonly ISecuritiesService _securitiesService;
+        private readonly IMACDService _macdService;
 
-
-        public AveragesController(IAveragesRepo repo, IAverageService averageService, ISecuritiesService securitiesRepo)
+        public AveragesController(IAveragesRepo repo, IAverageService averageService, IMACDService mACDService, ISecuritiesService securitiesRepo)
         {
             _repo = repo;
             _averageService = averageService;
+            _macdService = mACDService;
             _securitiesService = securitiesRepo;
         }
 
@@ -52,6 +53,14 @@ namespace StockTracker.Web.Controllers
             return Ok();
         }
 
+        [HttpGet("[action]")]
+        public IActionResult UpdateMACD()
+        {
+            var tickers = _securitiesService.RetriveveAll();
+            _macdService.CalculateMACD(tickers);
+
+            return Ok();
+        }
     }
 }
 

@@ -8,7 +8,7 @@ namespace StockTracker.Infrastructure.Repository
 {
 	public partial class 
 
-        BaseRepository<T>: IRespoitory<T> where T : class 	{
+        BaseRepository<T>: ICRUDRepo<T> where T : class 	{
         protected InvestingContext _dbContext;
          
 		public BaseRepository(InvestingContext context)

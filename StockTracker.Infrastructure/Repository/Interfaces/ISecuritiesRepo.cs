@@ -4,7 +4,7 @@ using StockTracker.Domain.Entities;
 
 namespace StockTracker.Infrastructure.Repository.Interfaces
 {
-    public interface ISecuritiesRepo:IRespoitory<Ticker>
+    public interface ISecuritiesRepo:IRespository<Ticker>
     {
         List<Ticker> RetriveveAll();
     }

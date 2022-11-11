@@ -40,10 +40,12 @@ namespace StockTracker.Web
 
             services.AddScoped<ISecuritiesRepo, SecuritiesRepository>();
             services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
+            services.AddScoped<IMovingAverageRepo, MovingAveragesRepo>();
             services.AddScoped<ISecuritiesService, SecuritiesService>();
             services.AddScoped<IChartService, ChartService>();
             services.AddScoped<IAveragesRepo, AveragesRepository>();
             services.AddScoped<IAverageService, AveragesService>();
+            services.AddScoped<IMACDService, MACDService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

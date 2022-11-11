@@ -73,44 +73,52 @@ namespace StockTracker.Business.Services
 
         public void CalculateAllAverages(List<Securities> tickers)
         {
-            foreach (var i in _hashTable)
+            foreach (var symbol in tickers)
             {
-                foreach (var symbol in tickers)
+                List<Averages> averageRange = new List<Averages>();
+
+                foreach (var i in _hashTable)
                 {
-                    List<Averages> averageRange = new List<Averages>();
-
-                    var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, i.Value);
-
-                    if (data.Count <= 1) continue;  //Averages are up to date or no data available
-
-                    if (i.Key.ToString().Contains("EMA"))
+                    try
                     {
+                        var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, i.Value);
+
+                        if (data.Count <= 1) continue;  //Averages are up to date or no data available
+
+                        if (i.Key.ToString().Contains("EMA"))
+                        {
+                            averageRange.AddRange(
+                                ConvertToAverageEntity(
+                                    CalculateEMA(data, i.Value),
+                                    symbol,
+                                    i.Key
+                                )
+                            );
+
+                            continue;
+                        }
+
                         averageRange.AddRange(
                             ConvertToAverageEntity(
-                                CalculateEMA(data, i.Value),
+                                CalculateMoveingAverage(data, i.Value),
                                 symbol,
                                 i.Key
                             )
                         );
 
-                        continue;
-                    }
 
-                    averageRange.AddRange(
-                        ConvertToAverageEntity(
-                            CalculateMoveingAverage(data, i.Value),
-                            symbol,
-                            i.Key
-                        )
-                    );
+                    }
+                    catch (Exception e)
+                    {
+                        var ex = e.Message;
+                    }
 
                     if (averageRange.Count > 0)
                     {
                         _repo.AddRange(averageRange);
                     }
                 }
-
-
+                    
             }
         }
 

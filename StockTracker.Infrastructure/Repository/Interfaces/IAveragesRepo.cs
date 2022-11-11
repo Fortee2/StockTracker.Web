@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace StockTracker.Infrastructure.Repository.Interfaces
 {
-	public interface IAveragesRepo: IRespoitory<Domain.Entities.Averages>
+	public interface IAveragesRepo: ICRUDRepo<Domain.Entities.Averages>
     {
-
+        
     }
 }
 

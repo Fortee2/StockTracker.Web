@@ -4,7 +4,7 @@ using StockTracker.Domain.Entities;
 
 namespace StockTracker.Infrastructure.Repository.Interfaces
 {
-    public interface IActivitiesRepo:IRespoitory<Domain.Entities.Activity>
+    public interface IActivitiesRepo:IRespository<Domain.Entities.Activity>
     {
         List<Activity> GetList(int tickerId, int numberOfDays);
     }

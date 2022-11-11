@@ -11,6 +11,7 @@ namespace StockTracker.Infrastructure.Repository
     {
 		public AveragesRepository(InvestingContext investingContext):base(investingContext)
 		{
+
 		}
 
 
