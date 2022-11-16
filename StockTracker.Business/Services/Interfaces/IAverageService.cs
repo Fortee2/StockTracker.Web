@@ -14,7 +14,7 @@ namespace StockTracker.Business.Services.Interfaces
         void CalculateAllAverages(List<Securities> tickers);
 
         MADto? RetrieveLastAverage(int tickerId, AverageTypes averageType);
-        List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, ushort numberOfPeriods);
+        List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, ushort numberOfPeriods, MADto? lastUpdate);
     }
 }
 

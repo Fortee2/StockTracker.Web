@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using StockTracker.Core.Calculations;
 using StockTracker.Core.Calculations.Response;
 using StockTracker.Core.Domain;
 using StockTracker.Core.Interfaces.Calculations;
 using StockTracker.Core.Interfaces;
 using StockTracker.Business.DTO;
-using StockTracker.Domain.Entities;
 using StockTracker.Business.Enumerations;
 using StockTracker.Infrastructure.Repository.Interfaces;
 using Averages = StockTracker.Domain.Entities.Averages;
-using System.Collections;
 using StockTracker.Business.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace StockTracker.Business.Services
 {
-	public class AveragesService: IAverageService
+    public class AveragesService: IAverageService
     {
         readonly IAveragesRepo _repo;
         readonly IMapper _mapper;
@@ -33,14 +28,14 @@ namespace StockTracker.Business.Services
 
 		public List<MADto> CalculateEMA(List<MADto> eMAs, ushort numberOfPeriods)
 		{
-            List<MADto> dtos = new List<MADto>();
+            List<MADto> dtos = new();
 
             if (eMAs.Count == 0) return dtos;
 
 			List<ITradingStructure> eMAData = new();
 			eMAData.AddRange(_mapper.Map<List<MADto>, List<MAData>>(eMAs));
 
-			ExponetialMovingAverage exponetialMovingAverage = new Core.Calculations.ExponetialMovingAverage(eMAData);
+			ExponetialMovingAverage exponetialMovingAverage = new(eMAData);
 
 			exponetialMovingAverage.NumberOfPeriods = numberOfPeriods;
 			exponetialMovingAverage.ColumnPreviousEma = "PrevMA";
@@ -75,13 +70,16 @@ namespace StockTracker.Business.Services
         {
             foreach (var symbol in tickers)
             {
-                List<Averages> averageRange = new List<Averages>();
+                List<Averages> averageRange = new();
 
                 foreach (var i in _hashTable)
                 {
                     try
                     {
-                        var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, i.Value);
+                        MADto? previous = RetrieveLastAverage(symbol.Id, i.Key);
+                        DateTime startTime = (previous == null) ? DateTime.UnixEpoch : previous.ActivityDate;
+
+                        var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, i.Value, previous);
 
                         if (data.Count <= 1) continue;  //Averages are up to date or no data available
 
@@ -98,12 +96,16 @@ namespace StockTracker.Business.Services
                             continue;
                         }
 
-                        averageRange.AddRange(
-                            ConvertToAverageEntity(
-                                CalculateMoveingAverage(data, i.Value),
+                        List<IResponse> averageData = CalculateMoveingAverage(data, i.Value);
+
+                        
+                        List<Averages> movingAvg = ConvertToAverageEntity(averageData,
                                 symbol,
                                 i.Key
-                            )
+                            ).Where(dt => dt.ActivityDate > startTime).ToList();
+
+                        averageRange.AddRange(
+                            movingAvg
                         );
 
 
@@ -112,13 +114,21 @@ namespace StockTracker.Business.Services
                     {
                         var ex = e.Message;
                     }
+                }
 
-                    if (averageRange.Count > 0)
+                if (averageRange.Count > 0)
+                {
+                    try
                     {
                         _repo.AddRange(averageRange);
+
                     }
+                    catch (Exception ex)
+                    {
+                        var message = ex.Message;
+                    }
+
                 }
-                    
             }
         }
 
@@ -172,6 +182,13 @@ namespace StockTracker.Business.Services
             _hashTable.Add(AverageTypes.MA21, 21);
             _hashTable.Add(AverageTypes.MA50, 50);
             _hashTable.Add(AverageTypes.EMA9, 9);
+            _hashTable.Add(AverageTypes.EMA2, 2);
+            _hashTable.Add(AverageTypes.EMA3, 3);
+            _hashTable.Add(AverageTypes.EMA4, 4);
+            _hashTable.Add(AverageTypes.EMA5, 5);
+            _hashTable.Add(AverageTypes.EMA6, 6);
+            _hashTable.Add(AverageTypes.EMA7, 7);
+            _hashTable.Add(AverageTypes.EMA8, 8);
         }
 
         public MADto? RetrieveLastAverage(int tickerId, AverageTypes averageType)
@@ -188,19 +205,21 @@ namespace StockTracker.Business.Services
             return data.SingleOrDefault();
         }
 
-        public List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, ushort numberOfPeriods)
+        public List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, ushort numberOfPeriods, MADto? lastUpdate)
         {
             var collection = new List<MADto>();
 
-            MADto? previous = RetrieveLastAverage(tickerId, averageType);
-            DateTime startTime = (previous == null) ? DateTime.UnixEpoch : previous.ActivityDate;
+          
+            DateTime startTime = (lastUpdate == null) ? DateTime.UnixEpoch : lastUpdate.ActivityDate;
 
             if (averageType.ToString().StartsWith("MA") || averageType.ToString().Contains("VOL"))
             {
-                startTime = startTime.Subtract(new TimeSpan(numberOfPeriods, 0, 0, 0));
+                startTime = CalculateNewStartDate(startTime, numberOfPeriods);
             }
-
-            if (previous != null) collection.Add(previous);
+            else
+            {
+                if (lastUpdate != null) collection.Add(lastUpdate);
+            }
 
             var data = (from quotes in _repo.GetDbContext().Activities
                         where (
@@ -214,6 +233,21 @@ namespace StockTracker.Business.Services
             collection.AddRange(data.ToList());
 
             return collection;
+        }
+
+        private DateTime CalculateNewStartDate(DateTime lastUpdated, int interval)
+        {
+            var dateData = (from dates in _repo.GetDbContext().Activities
+                            where (
+                                dates.ActivityDate < lastUpdated
+                                && dates.ActivityDate > lastUpdated.Subtract(new TimeSpan(365,0,0,0))
+                            )
+                            orderby dates.ActivityDate descending
+                            select dates.ActivityDate).Distinct().ToList();
+
+            if (dateData.Count == 0) return DateTime.UnixEpoch;
+
+            return dateData.ElementAt(interval);
         }
     }
 }
