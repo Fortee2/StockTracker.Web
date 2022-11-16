@@ -22,6 +22,7 @@ namespace StockTracker.Infrastructure.Repository
         public List<Ticker> RetriveveAll()
         {
             var tickers =  from symbols in _dbContext.Tickers
+                           orderby symbols.InPortfolio descending
                             select symbols;
 
             return tickers.ToList();
