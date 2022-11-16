@@ -9,8 +9,16 @@ namespace StockTracker.Business.Enumerations
 		MA21,
 		EMA12,
 		EMA26,
-		MA9,
-		EMA9,
+        EMA2,
+        EMA3,
+        EMA4,
+        EMA5,
+        EMA6,
+        EMA7,
+        EMA8,
+        EMA9,
+        EMA10,
+        MA9,
 		VOL90
 	}
 }
