@@ -18,11 +18,9 @@
     <Folder Include="enumerstions\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StockTracker\Core\StockTracker.Core.csproj" />
-    <ProjectReference Include="..\StockerTracker.Domain\StockTracker.Domain.csproj" />
-    <ProjectReference Include="..\StockTracker.Infrastructure\StockTracker.Infrastructure.csproj" />
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <ProjectReference Include="..\StockTracker.Infrastructure\StockTracker.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

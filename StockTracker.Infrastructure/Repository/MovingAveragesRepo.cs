@@ -1,6 +1,6 @@
 ﻿using System;
-using StockTracker.Database.investing;
-using StockTracker.Domain.Entities;
+using StockTracker.Infrastructure.Investing;
+using StockTracker.Core.Entities;
 using StockTracker.Infrastructure.Repository.Interfaces;
 
 namespace StockTracker.Infrastructure.Repository

@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
-using StockTracker.Domain.Entities;
-using StockTracker.Domain;
+using StockTracker.Core.Entities;
+using StockTracker.Core;
 
 namespace StockTracker.Web.Mapping
 {

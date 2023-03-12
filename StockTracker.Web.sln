@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.810.17
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Web", "StockTracker.Web\StockTracker.Web.csproj", "{ED00AEA3-DCC1-4DD5-8A21-C1C48F697874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "..\StockTracker.Analyzer\StockTracker.Analysis\Database\Database.csproj", "{27D3DA34-C82F-4E56-80E1-CE7A2F8549B3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Domain", "StockerTracker.Domain\StockTracker.Domain.csproj", "{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Core", "..\StockTracker\Core\StockTracker.Core.csproj", "{E40CB010-E7DF-4B2E-9E92-6AE7F85196A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTracker.Business", "StockTracker.Business\StockTracker.Business.csproj", "{90209A21-4C62-444D-AF79-E7DB8B462C55}"
@@ -25,14 +21,6 @@ Global
 		{ED00AEA3-DCC1-4DD5-8A21-C1C48F697874}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED00AEA3-DCC1-4DD5-8A21-C1C48F697874}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED00AEA3-DCC1-4DD5-8A21-C1C48F697874}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27D3DA34-C82F-4E56-80E1-CE7A2F8549B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27D3DA34-C82F-4E56-80E1-CE7A2F8549B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27D3DA34-C82F-4E56-80E1-CE7A2F8549B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27D3DA34-C82F-4E56-80E1-CE7A2F8549B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEBB3EEA-3894-4C54-91B6-DB548AD0EA92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E40CB010-E7DF-4B2E-9E92-6AE7F85196A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E40CB010-E7DF-4B2E-9E92-6AE7F85196A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E40CB010-E7DF-4B2E-9E92-6AE7F85196A2}.Release|Any CPU.ActiveCfg = Release|Any CPU

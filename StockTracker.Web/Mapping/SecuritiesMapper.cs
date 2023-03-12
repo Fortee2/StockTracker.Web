@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
-using StockTracker.Database.investing;
-using StockTracker.Domain.Entities;
+using StockTracker.Infrastructure.Investing;
+using StockTracker.Core.Entities;
 using StockTracker.Business.DTO;
 
 namespace StockTracker.Web.Mapping

@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using StockTracker.Business.DTO;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 
 namespace StockTracker.Web.Mapping
 {

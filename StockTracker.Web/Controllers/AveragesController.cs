@@ -10,7 +10,7 @@ using MySqlX.XDevAPI.Common;
 using StockTracker.Core.Calculations.Response;
 using StockTracker.Core.Interfaces.Calculations;
 using StockTracker.Business.DTO;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 using StockTracker.Business.Enumerations;
 using  StockTracker.Infrastructure.Repository.Interfaces;
 using StockTracker.Business.Services.Interfaces;
@@ -41,7 +41,7 @@ namespace StockTracker.Web.Controllers
         public List<MADto> GetMovingAverages(int tickerId, AverageTypes averageTypeEnum )
         {
             //TODO:  Fix hard code number of periods.
-            return _averageService.RetrieveDataForAverageCalculations(tickerId, averageTypeEnum,9);
+            return _averageService.RetrieveDataForAverageCalculations(tickerId, averageTypeEnum,9, null);
         }
 
         [HttpGet("[action]")]

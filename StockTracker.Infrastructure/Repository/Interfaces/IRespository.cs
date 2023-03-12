@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.Database.investing;
+using StockTracker.Infrastructure.Investing;
 
 namespace StockTracker.Infrastructure.Repository.Interfaces
 {

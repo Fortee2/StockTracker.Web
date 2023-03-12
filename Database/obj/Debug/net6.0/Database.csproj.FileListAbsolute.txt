@@ -1,0 +1,16 @@
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/bin/Debug/net6.0/Database.dll.config
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/bin/Debug/net6.0/Database.deps.json
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/bin/Debug/net6.0/Database.dll
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/bin/Debug/net6.0/Database.pdb
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/bin/Debug/net6.0/StockTracker.Domain.dll
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/bin/Debug/net6.0/StockTracker.Domain.pdb
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.csproj.AssemblyReference.cache
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.GeneratedMSBuildEditorConfig.editorconfig
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.AssemblyInfoInputs.cache
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.AssemblyInfo.cs
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.csproj.CoreCompileInputs.cache
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.csproj.CopyComplete
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.dll
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/refint/Database.dll
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/Database.pdb
+/Users/randycostner/Projects/StockTracker.Analyzer/StockTracker.Analysis/Database/obj/Debug/net6.0/ref/Database.dll

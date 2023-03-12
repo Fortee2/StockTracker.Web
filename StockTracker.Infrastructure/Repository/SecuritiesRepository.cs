@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using StockTracker.Database.investing;
+using StockTracker.Infrastructure.Investing;
 using System.Linq;
 using StockTracker.Infrastructure.Repository.Interfaces;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 
 
 namespace StockTracker.Infrastructure.Repository
@@ -22,7 +22,6 @@ namespace StockTracker.Infrastructure.Repository
         public List<Ticker> RetriveveAll()
         {
             var tickers =  from symbols in _dbContext.Tickers
-                           orderby symbols.InPortfolio descending
                             select symbols;
 
             return tickers.ToList();

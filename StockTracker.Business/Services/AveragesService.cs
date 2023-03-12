@@ -7,7 +7,7 @@ using StockTracker.Core.Interfaces;
 using StockTracker.Business.DTO;
 using StockTracker.Business.Enumerations;
 using StockTracker.Infrastructure.Repository.Interfaces;
-using Averages = StockTracker.Domain.Entities.Averages;
+using Averages = StockTracker.Core.Entities.Averages;
 using StockTracker.Business.Services.Interfaces;
 
 namespace StockTracker.Business.Services
@@ -42,7 +42,7 @@ namespace StockTracker.Business.Services
 			exponetialMovingAverage.ColumnToAvg = "CalculateValue";
 
             var resp =  exponetialMovingAverage.Calculate();
-
+               
 			foreach(IResponse response in resp)
 			{
 				dtos.Add(new MADto(response.ActivityDate, 0,response.GetDecimalValue("Value")));
@@ -189,6 +189,24 @@ namespace StockTracker.Business.Services
             _hashTable.Add(AverageTypes.EMA6, 6);
             _hashTable.Add(AverageTypes.EMA7, 7);
             _hashTable.Add(AverageTypes.EMA8, 8);
+            _hashTable.Add(AverageTypes.EMA11,11);
+            _hashTable.Add(AverageTypes.EMA13,13);
+            _hashTable.Add(AverageTypes.EMA14,14);
+            _hashTable.Add(AverageTypes.EMA15,15);
+            _hashTable.Add(AverageTypes.EMA16,16);
+            _hashTable.Add(AverageTypes.EMA17,17);
+            _hashTable.Add(AverageTypes.EMA18,18);
+            _hashTable.Add(AverageTypes.EMA19,19);
+            _hashTable.Add(AverageTypes.EMA20,20);
+            _hashTable.Add(AverageTypes.EMA21,21);
+            _hashTable.Add(AverageTypes.EMA22,22);
+            _hashTable.Add(AverageTypes.EMA23,23);
+            _hashTable.Add(AverageTypes.EMA24,24);
+            _hashTable.Add(AverageTypes.EMA25,25);
+            _hashTable.Add(AverageTypes.EMA27,27);
+            _hashTable.Add(AverageTypes.EMA28,28);
+            _hashTable.Add(AverageTypes.EMA29,29);
+            _hashTable.Add(AverageTypes.EMA30,30);
         }
 
         public MADto? RetrieveLastAverage(int tickerId, AverageTypes averageType)

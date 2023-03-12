@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using StockTracker.Database.investing;
+using StockTracker.Infrastructure.Investing;
 using StockTracker.Infrastructure.Repository;
 using Microsoft.Extensions.Options;
 using System.Collections;
@@ -41,6 +41,16 @@ namespace StockTracker.Infrastructure.Repository
                         && tradingActivity.ActivityDate > lastDate
                     orderby tradingActivity.ActivityDate 
                     select tradingActivity).ToList();
+        }
+
+        InvestingContext IRespository<Core.Entities.Activity>.GetDbContext()
+        {
+            throw new NotImplementedException();
+        }
+
+        Activity IRespository<Activity>.FindById(int Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

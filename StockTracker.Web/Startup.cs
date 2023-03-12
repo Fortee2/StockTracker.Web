@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StockTracker.Database.investing;
+using StockTracker.Infrastructure.Investing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using StockTracker.Infrastructure.Repository.Interfaces;

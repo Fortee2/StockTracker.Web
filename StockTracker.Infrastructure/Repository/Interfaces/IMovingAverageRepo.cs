@@ -1,5 +1,5 @@
 ﻿using System;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 
 namespace StockTracker.Infrastructure.Repository.Interfaces
 {

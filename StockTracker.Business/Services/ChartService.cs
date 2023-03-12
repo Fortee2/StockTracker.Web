@@ -2,7 +2,7 @@
 using AutoMapper;
 using StockTracker.Business.DTO;
 using StockTracker.Business.Services.Interfaces;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 using StockTracker.Infrastructure.Repository.Interfaces;
 
 namespace StockTracker.Business.Services

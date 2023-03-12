@@ -1,5 +1,5 @@
 ﻿using System;
-using StockTracker.Database.investing;
+using StockTracker.Infrastructure.Investing;
 using StockTracker.Infrastructure.Repository.Interfaces;
 using System.Linq;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace StockTracker.Infrastructure.Repository
 
         }
 
-        public T FindById(int id)
+        public T? FindById(int id)
         {
             return _dbContext.Find<T>(id);
           

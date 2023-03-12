@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using StockTracker.Database.investing;
-using StockTracker.Domain.Entities;
+using StockTracker.Infrastructure.Investing;
+using StockTracker.Core.Entities;
 using System.Linq;
 using StockTracker.Infrastructure.Repository.Interfaces;
 

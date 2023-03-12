@@ -7,9 +7,9 @@ using StockTracker.Core.Calculations.Response;
 using StockTracker.Core.Domain;
 using StockTracker.Core.Interfaces;
 using StockTracker.Core.Interfaces.Calculations;
-using StockTracker.Domain.Entities;
+using StockTracker.Core.Entities;
 using StockTracker.Infrastructure.Repository.Interfaces;
-using Averages = StockTracker.Domain.Entities.Averages;
+using Averages = StockTracker.Core.Entities.Averages;
 
 namespace StockTracker.Business.Services
 {
