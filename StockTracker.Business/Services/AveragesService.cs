@@ -66,7 +66,7 @@ namespace StockTracker.Business.Services
             return movingAveraage.Calculate();
 		}
 
-        public void CalculateAllAverages(List<Securities> tickers)
+        public  void CalculateAllAverages(List<Securities> tickers)
         {
             foreach (var symbol in tickers)
             {
@@ -79,7 +79,7 @@ namespace StockTracker.Business.Services
                         MADto? previous = RetrieveLastAverage(symbol.Id, i.Key);
                         DateTime startTime = (previous == null) ? DateTime.UnixEpoch : previous.ActivityDate;
 
-                        var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, i.Value, previous);
+                        var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, previous);
 
                         if (data.Count <= 1) continue;  //Averages are up to date or no data available
 
@@ -174,38 +174,15 @@ namespace StockTracker.Business.Services
         private void LoadDictionary()
         {
             _hashTable.Add(AverageTypes.VOL90, 90);
-            _hashTable.Add(AverageTypes.EMA12, 12);
-            _hashTable.Add(AverageTypes.EMA26, 26);
-            _hashTable.Add(AverageTypes.MA9, 9);
             _hashTable.Add(AverageTypes.MA7, 7);
             _hashTable.Add(AverageTypes.MA14, 14);
             _hashTable.Add(AverageTypes.MA21, 21);
             _hashTable.Add(AverageTypes.MA50, 50);
-            _hashTable.Add(AverageTypes.EMA9, 9);
-            _hashTable.Add(AverageTypes.EMA2, 2);
-            _hashTable.Add(AverageTypes.EMA3, 3);
-            _hashTable.Add(AverageTypes.EMA4, 4);
-            _hashTable.Add(AverageTypes.EMA5, 5);
-            _hashTable.Add(AverageTypes.EMA6, 6);
             _hashTable.Add(AverageTypes.EMA7, 7);
-            _hashTable.Add(AverageTypes.EMA8, 8);
-            _hashTable.Add(AverageTypes.EMA11,11);
-            _hashTable.Add(AverageTypes.EMA13,13);
             _hashTable.Add(AverageTypes.EMA14,14);
-            _hashTable.Add(AverageTypes.EMA15,15);
-            _hashTable.Add(AverageTypes.EMA16,16);
-            _hashTable.Add(AverageTypes.EMA17,17);
-            _hashTable.Add(AverageTypes.EMA18,18);
-            _hashTable.Add(AverageTypes.EMA19,19);
-            _hashTable.Add(AverageTypes.EMA20,20);
+            _hashTable.Add(AverageTypes.EMA12, 12);
+            _hashTable.Add(AverageTypes.EMA26, 26);
             _hashTable.Add(AverageTypes.EMA21,21);
-            _hashTable.Add(AverageTypes.EMA22,22);
-            _hashTable.Add(AverageTypes.EMA23,23);
-            _hashTable.Add(AverageTypes.EMA24,24);
-            _hashTable.Add(AverageTypes.EMA25,25);
-            _hashTable.Add(AverageTypes.EMA27,27);
-            _hashTable.Add(AverageTypes.EMA28,28);
-            _hashTable.Add(AverageTypes.EMA29,29);
             _hashTable.Add(AverageTypes.EMA30,30);
         }
 
@@ -223,11 +200,11 @@ namespace StockTracker.Business.Services
             return data.SingleOrDefault();
         }
 
-        public List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, ushort numberOfPeriods, MADto? lastUpdate)
+        public List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, MADto? lastUpdate)
         {
             var collection = new List<MADto>();
-
-          
+            ushort numberOfPeriods = _hashTable.Where(w => w.Key == averageType).Select(v => v.Value).First();
+                      
             DateTime startTime = (lastUpdate == null) ? DateTime.UnixEpoch : lastUpdate.ActivityDate;
 
             if (averageType.ToString().StartsWith("MA") || averageType.ToString().Contains("VOL"))
