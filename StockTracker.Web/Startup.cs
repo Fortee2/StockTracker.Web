@@ -39,14 +39,17 @@ namespace StockTracker.Web
             services.AddDbContext<InvestingContext>(options => options.UseMySQL(Configuration.GetConnectionString("InvestingDatabase")));
 
             services.AddScoped<ISecuritiesRepo, SecuritiesRepository>();
-            services.AddScoped<IActivitiesRepo, ActivitiesRepository>();
+            services.AddTransient<IActivitiesRepo, ActivitiesRepository>();
             services.AddScoped<IMovingAverageRepo, MovingAveragesRepo>();
             services.AddScoped<ISecuritiesService, SecuritiesService>();
             services.AddScoped<IChartService, ChartService>();
+            services.AddScoped<IJobStatusRepo, JobStatusRepository>();
             services.AddScoped<IAveragesRepo, AveragesRepository>();
             services.AddScoped<IAverageService, AveragesService>();
             services.AddScoped<IMACDService, MACDService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddHostedService<MovingAveragesBackgroundService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

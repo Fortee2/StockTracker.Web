@@ -33,10 +33,12 @@
     <None Remove="BAL\" />
     <None Remove="ClientApp\src\components\securities\" />
     <None Remove="Repository\intefaces\common\" />
+    <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mapping\" />
     <Folder Include="ClientApp\src\components\securities\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Services\AveragesHostedService.cs" />

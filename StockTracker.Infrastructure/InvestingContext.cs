@@ -24,6 +24,7 @@ namespace StockTracker.Infrastructure.Investing
         public virtual DbSet<Rsi> Rsis { get; set; }
         public virtual DbSet<Ticker> Tickers { get; set; }
         public virtual DbSet<MovingAverages> MovingAverages { get; set; }
+        public virtual DbSet<JobStatus> JobStatuses { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
