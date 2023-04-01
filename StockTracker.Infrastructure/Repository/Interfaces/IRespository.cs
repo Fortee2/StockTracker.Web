@@ -8,7 +8,7 @@ namespace StockTracker.Infrastructure.Repository.Interfaces
 	{
         InvestingContext GetDbContext();
 
-		T FindById(int Id);
+		T? FindById(int Id);
 	}
 }
 

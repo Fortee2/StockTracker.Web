@@ -36,7 +36,7 @@ namespace StockTracker.Infrastructure.Repository
 
         public void Delete(int id)
         {
-            T record = FindById(id);
+            T? record = FindById(id);
             if(record != null)
             {
                 _dbContext.Remove(record);

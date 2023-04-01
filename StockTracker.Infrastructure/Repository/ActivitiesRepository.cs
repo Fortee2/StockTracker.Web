@@ -45,12 +45,14 @@ namespace StockTracker.Infrastructure.Repository
 
         InvestingContext IRespository<Core.Entities.Activity>.GetDbContext()
         {
-            throw new NotImplementedException();
+            return this._dbContext;
         }
 
-        Activity IRespository<Activity>.FindById(int Id)
+        Activity? IRespository<Activity>.FindById(int Id)
         {
-            throw new NotImplementedException();
+            return (from tradingActivity in _dbContext.Activities
+                    where tradingActivity.Id == Id
+                    select tradingActivity).FirstOrDefault();
         }
     }
 }
