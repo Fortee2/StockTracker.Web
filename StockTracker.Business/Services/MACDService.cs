@@ -34,7 +34,7 @@ namespace StockTracker.Business.Services
 
                 if (endCalculation.Subtract(lastCalculated).TotalDays < 1) continue;
                 
-                List<ITradingStructure> tradingData = (List<ITradingStructure>)GetDataForCalculations(tick.Id, lastCalculated,endCalculation);
+                List<ITradingStructure> tradingData = GetDataForCalculations(tick.Id, lastCalculated,endCalculation);
 
                 MACD mACD = new MACD(tradingData);
 
