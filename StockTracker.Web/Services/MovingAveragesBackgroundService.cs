@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StockTracker.Business.Services.Interfaces;
+using StockTracker.Infrastructure.Repository.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,6 +52,7 @@ public class MovingAveragesBackgroundService : IHostedService, IDisposable
         {
             var securitiesService = scope.ServiceProvider.GetRequiredService<ISecuritiesService>();
             var averageService = scope.ServiceProvider.GetRequiredService<IAverageService>();
+            var jobStatus = scope.ServiceProvider.GetRequiredService<IJobStatusRepo>();
             var tickers = securitiesService.RetriveveAll();
             averageService.CalculateAllAverages(tickers);
         }

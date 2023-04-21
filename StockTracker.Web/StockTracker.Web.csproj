@@ -17,6 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,23 +35,19 @@
     <None Remove="ClientApp\src\components\securities\" />
     <None Remove="Repository\intefaces\common\" />
     <None Remove="Services\" />
+    <None Remove="ClientApp\src\features\utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mapping\" />
     <Folder Include="ClientApp\src\components\securities\" />
     <Folder Include="Services\" />
+    <Folder Include="ClientApp\src\features\utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Services\AveragesHostedService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockTracker.Business\StockTracker.Business.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\..\StockTracker\Core\StockTracker.Core.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\StockTracker.Infrastructure\StockTracker.Infrastructure.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

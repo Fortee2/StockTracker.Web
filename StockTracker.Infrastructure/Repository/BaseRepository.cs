@@ -22,10 +22,22 @@ namespace StockTracker.Infrastructure.Repository
             _dbContext.SaveChanges();
         }
 
+        public async Task<int> AddAsync(T obj)
+        {
+            await _dbContext.AddAsync(obj);
+            return await _dbContext.SaveChangesAsync();
+        }
+
         public void AddRange(List<T> values)
         {
             _dbContext.AddRange(values);
             _dbContext.SaveChanges();
+        }
+
+        public async Task<int> AddRangeAsync(List<T> values)
+        {
+            await _dbContext.AddRangeAsync(values);
+            return await _dbContext.SaveChangesAsync();
         }
 
         public void Delete(T obj)

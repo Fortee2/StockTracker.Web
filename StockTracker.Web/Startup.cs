@@ -49,7 +49,9 @@ namespace StockTracker.Web
             services.AddScoped<IMACDService, MACDService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddHostedService<MovingAveragesBackgroundService>();
+            //services.AddHostedService<MovingAveragesBackgroundService>();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +80,10 @@ namespace StockTracker.Web
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
 
             app.UseSpa(spa =>
             {

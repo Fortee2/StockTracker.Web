@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockTracker.Infrastructure.Investing;
 
@@ -10,9 +11,10 @@ using StockTracker.Infrastructure.Investing;
 namespace StockTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestingContext))]
-    partial class InvestingContextModelSnapshot : ModelSnapshot
+    [Migration("20230401184303_create_jobstatus_table")]
+    partial class create_jobstatus_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,14 +246,6 @@ namespace StockTracker.Infrastructure.Migrations
                 {
                     b.Navigation("Rsis");
                 });
-
-            modelBuilder.Entity("StockTracker.Core.Entities.JobStatus", b =>
-            {
-                b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-            });
 #pragma warning restore 612, 618
         }
     }

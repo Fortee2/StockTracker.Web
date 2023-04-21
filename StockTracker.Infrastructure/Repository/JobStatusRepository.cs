@@ -10,6 +10,17 @@ namespace StockTracker.Infrastructure.Repository
 		public JobStatusRepository(InvestingContext context):base(context)
 		{
 		}
-	}
+
+        public List<JobStatus> RetrieveAll()
+        {
+            var statuses = (from jobStatus in _dbContext.JobStatuses
+                           orderby jobStatus.ActivityTime descending
+                           select jobStatus).Take(30);
+
+            return statuses.ToList();
+        }
+
+
+    }
 }
 
