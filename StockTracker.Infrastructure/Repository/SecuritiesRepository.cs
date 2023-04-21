@@ -18,6 +18,15 @@ namespace StockTracker.Infrastructure.Repository
             _map = mapper;
 		}
 
+        public Ticker? FindBySymbol(string symbol)
+        {
+            var ticker = (from symbols in _dbContext.Tickers
+                         where symbols.Symbol == symbol.ToUpper()
+                         select symbols)
+                            .FirstOrDefault();
+
+            return ticker;
+        }
 
         public List<Ticker> RetriveveAll()
         {

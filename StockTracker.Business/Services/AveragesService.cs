@@ -15,13 +15,15 @@ namespace StockTracker.Business.Services
     public class AveragesService: IAverageService
     {
         readonly IAveragesRepo _repo;
+        readonly IJobStatusRepo _statusRepo;
         readonly IMapper _mapper;
         private readonly Dictionary<AverageTypes, ushort> _hashTable = new Dictionary<AverageTypes, ushort>();
 
-        public AveragesService(IAveragesRepo activitiesRepo, IMapper mapper)
+        public AveragesService(IAveragesRepo activitiesRepo, IJobStatusRepo jobStatusRepo, IMapper mapper)
 		{
 			_repo = activitiesRepo;
 			_mapper = mapper;
+            _statusRepo = jobStatusRepo;
 
             LoadDictionary();
         }
@@ -66,70 +68,108 @@ namespace StockTracker.Business.Services
             return movingAveraage.Calculate();
 		}
 
-        public  void CalculateAllAverages(List<Securities> tickers)
+        public async Task CalculateAllAveragesBySymbol(Securities ticker)
+        {
+             await ProcessAverages(ticker);
+        }
+
+        public async Task CalculateAllAverages(List<Securities> tickers)
         {
             foreach (var symbol in tickers)
             {
-                List<Averages> averageRange = new();
+               await  ProcessAverages(symbol);
+            }
+        }
 
-                foreach (var i in _hashTable)
+        private async Task ProcessAverages(Securities security)
+        {
+            List<Averages> averageRange = new();
+
+            await _statusRepo.AddAsync(new Core.Entities.JobStatus()
+            {
+                JobName = "CalculateAllAverages",
+                ActivityDescription = String.Format("Started Processing {0} ",
+                security.Name),
+                ActivityTime = DateTime.Now
+            });
+
+            foreach (var i in _hashTable)
+            {
+                await _statusRepo.AddAsync(new Core.Entities.JobStatus()
                 {
-                    try
+                    JobName = "CalculateAllAverages",
+                    ActivityDescription = String.Format("Calculating {0} ", i.Key),
+                    ActivityTime = DateTime.Now
+                });
+
+                try
+                {
+                    MADto? previous = RetrieveLastAverage(security.Id, i.Key);
+                    DateTime startTime = (previous == null) ? DateTime.UnixEpoch : previous.ActivityDate;
+
+                    var data = RetrieveDataForAverageCalculations(security.Id, i.Key, previous);
+
+                    if (data.Count <= 1) continue;  //Averages are up to date or no data available
+
+                    if (i.Key.ToString().Contains("EMA"))
                     {
-                        MADto? previous = RetrieveLastAverage(symbol.Id, i.Key);
-                        DateTime startTime = (previous == null) ? DateTime.UnixEpoch : previous.ActivityDate;
-
-                        var data = RetrieveDataForAverageCalculations(symbol.Id, i.Key, previous);
-
-                        if (data.Count <= 1) continue;  //Averages are up to date or no data available
-
-                        if (i.Key.ToString().Contains("EMA"))
-                        {
-                            averageRange.AddRange(
-                                ConvertToAverageEntity(
-                                    CalculateEMA(data, i.Value),
-                                    symbol,
-                                    i.Key
-                                )
-                            );
-
-                            continue;
-                        }
-
-                        List<IResponse> averageData = CalculateMoveingAverage(data, i.Value);
-
-                        
-                        List<Averages> movingAvg = ConvertToAverageEntity(averageData,
-                                symbol,
-                                i.Key
-                            ).Where(dt => dt.ActivityDate > startTime).ToList();
-
                         averageRange.AddRange(
-                            movingAvg
+                            ConvertToAverageEntity(
+                                CalculateEMA(data, i.Value),
+                                security,
+                                i.Key
+                            )
                         );
 
+                        continue;
+                    }
 
-                    }
-                    catch (Exception e)
-                    {
-                        var ex = e.Message;
-                    }
+                    List<Averages> movingAvg = ConvertToAverageEntity(
+                        CalculateMoveingAverage(data, i.Value),
+                        security,
+                        i.Key
+                    ).Where(
+                        dt => dt.ActivityDate > startTime
+                    ).ToList();
+
+                    averageRange.AddRange(
+                        movingAvg
+                    );
+
+
                 }
-
-                if (averageRange.Count > 0)
+                catch (Exception e)
                 {
-                    try
-                    {
-                        _repo.AddRange(averageRange);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        var message = ex.Message;
-                    }
-
+                    var ex = e.Message;
                 }
             }
+
+            if (averageRange != null && averageRange.Count > 0)
+            {
+                try
+                {
+                    await _repo.AddRangeAsync(averageRange);
+                }
+                catch (Exception ex)
+                {
+                    await _statusRepo.AddAsync(new Core.Entities.JobStatus()
+                    {
+                        JobName = "CalculateAllAverages",
+                        ActivityDescription = String.Format("Error Saving {0} ",
+                         ex.Message),
+                        ActivityTime = DateTime.Now
+                    });
+                }
+
+            }
+
+            await _statusRepo.AddAsync(new Core.Entities.JobStatus()
+            {
+                JobName = "CalculateAllAverages",
+                ActivityDescription = String.Format("Finished Processing {0} ",
+                 security.Name),
+                ActivityTime = DateTime.Now
+            });
         }
 
         private List<Averages> ConvertToAverageEntity(List<MADto> dtoResults, Securities symbol, AverageTypes averageTypes)
@@ -209,7 +249,7 @@ namespace StockTracker.Business.Services
 
             if (averageType.ToString().StartsWith("MA") || averageType.ToString().Contains("VOL"))
             {
-                startTime = CalculateNewStartDate(startTime, numberOfPeriods);
+                startTime = CalculateNewStartDate(tickerId, startTime, numberOfPeriods);
             }
             else
             {
@@ -230,20 +270,36 @@ namespace StockTracker.Business.Services
             return collection;
         }
 
-        private DateTime CalculateNewStartDate(DateTime lastUpdated, int interval)
+        private DateTime CalculateNewStartDate(int TickerId, DateTime LastUpdated, int Interval)
         {
+            var lastDataPoint = (from dates in _repo.GetDbContext().Activities
+                                 where dates.TickerId == TickerId
+                                    && dates.ActivityDate > LastUpdated
+                                 select dates.ActivityDate).FirstOrDefault();
+
+            if (lastDataPoint.Year == 1) return LastUpdated;
+
+            //We have to retrieve more data than necessary because dates and periods are not the same thing
             var dateData = (from dates in _repo.GetDbContext().Activities
                             where (
-                                dates.ActivityDate < lastUpdated
-                                && dates.ActivityDate > lastUpdated.Subtract(new TimeSpan(365,0,0,0))
+                                dates.TickerId == TickerId 
+                                && dates.ActivityDate < LastUpdated
+                                && dates.ActivityDate > LastUpdated.Subtract(new TimeSpan(Interval * 2,0,0,0))  
                             )
-                            orderby dates.ActivityDate descending
+                            orderby dates.ActivityDate
                             select dates.ActivityDate).Distinct().ToList();
 
             if (dateData.Count == 0) return DateTime.UnixEpoch;
 
-            return dateData.ElementAt(interval);
+            //TODO:Ordering the list descending doesn't change the order of the data returned
+            //Think this maybe an EF and mysql issue.  I am just going to calculate where to
+            //Grab a value from the end
+            int calcuatePosition = dateData.Count - Interval - 1;
+
+            return dateData.ElementAt(calcuatePosition);
         }
+
+
     }
 }
 

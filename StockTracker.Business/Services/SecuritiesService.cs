@@ -24,6 +24,18 @@ namespace StockTracker.Business.Services
 
 			return _map.Map<IList<Ticker>, List<Securities>>(tickerList);
         }
+
+		public Securities? FindSecurityBySymbol(string symbol)
+		{
+			if(symbol.Trim() == "")
+			{
+				throw new Exception("Security Symbol can not be blank.");
+			}
+
+			var security = _repo.FindBySymbol(symbol);
+
+            return (security == null)? null : _map.Map<Ticker, Securities>(security);
+		}
 	}
 }
 

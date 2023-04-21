@@ -11,7 +11,8 @@ namespace StockTracker.Business.Services.Interfaces
 	{
         List<MADto> CalculateEMA(List<MADto> eMAs, ushort numberOfPeriods);
         List<IResponse> CalculateMoveingAverage(List<MADto> MAs, ushort numberOfPeriods);
-        void CalculateAllAverages(List<Securities> tickers);
+        Task CalculateAllAverages(List<Securities> tickers);
+        Task CalculateAllAveragesBySymbol(Securities ticker);
 
         MADto? RetrieveLastAverage(int tickerId, AverageTypes averageType);
         List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, MADto? lastUpdate);

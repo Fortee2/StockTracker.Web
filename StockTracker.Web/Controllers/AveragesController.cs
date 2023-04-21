@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;   
 using StockTracker.Business.DTO;
 using StockTracker.Business.Enumerations;
@@ -12,20 +13,18 @@ namespace StockTracker.Web.Controllers
     [Route("api/[controller]")]
     public class AveragesController : Controller
     {
-        private readonly IAveragesRepo _repo;
         private readonly IAverageService _averageService;
         private readonly ISecuritiesService _securitiesService;
         private readonly IMACDService _macdService;
 
         public AveragesController(IAveragesRepo repo, IAverageService averageService, IMACDService mACDService, ISecuritiesService securitiesRepo)
         {
-            _repo = repo;
             _averageService = averageService;
             _macdService = mACDService;
             _securitiesService = securitiesRepo;
         }
 
-        
+         
         [HttpGet()]
         public List<MADto> GetMovingAverages(int tickerId, AverageTypes averageTypeEnum )
         {
@@ -33,12 +32,20 @@ namespace StockTracker.Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult UpdateMovingAverages()
+        public IActionResult UpdateMovingAverages(string symbol)
         {
-            var tickers = _securitiesService.RetriveveAll();
-            _averageService.CalculateAllAverages(tickers);
+            try
+            {
+                var tickers = _securitiesService.FindSecurityBySymbol(symbol);
+                _averageService.CalculateAllAveragesBySymbol(tickers);
 
-            return Ok();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpGet("[action]")]
