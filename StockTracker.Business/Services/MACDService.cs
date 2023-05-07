@@ -25,29 +25,25 @@ namespace StockTracker.Business.Services
             _averagesRepo = averagesRepo;
 		}
 
-        public void CalculateMACD(List<Securities> tickers)
+        public void CalculateMACD(Securities ticker)
         {
-            foreach(var tick in tickers)
-            {
-                DateTime lastCalculated = GetLastMACDDate(tick.Id)?? DateTime.UnixEpoch;
-                DateTime endCalculation = DateTime.Now;
+            DateTime lastCalculated = GetLastMACDDate(ticker.Id)?? DateTime.UnixEpoch;
+            DateTime endCalculation = DateTime.Now;
 
-                if (endCalculation.Subtract(lastCalculated).TotalDays < 1) continue;
-                
-                List<ITradingStructure> tradingData = GetDataForCalculations(tick.Id, lastCalculated,endCalculation);
+            if (endCalculation.Subtract(lastCalculated).TotalDays < 1) return;
+            
+            List<ITradingStructure> tradingData = GetDataForCalculations(ticker.Id, lastCalculated,endCalculation);
 
-                MACD mACD = new MACD(tradingData);
+            MACD mACD = new MACD(tradingData);
 
-                mACD.EMA12Column = "Previous12EMA";
-                mACD.EMA26Column = "Previous26EMA";
-                mACD.MACDColumn = "MACD";
-                mACD.SignalColumn = "Signal";
+            mACD.EMA12Column = "Previous12EMA";
+            mACD.EMA26Column = "Previous26EMA";
+            mACD.MACDColumn = "MACD";
+            mACD.SignalColumn = "Signal";
 
-                List<IResponse> data = mACD.Calculate();
+            List<IResponse> data = mACD.Calculate();
 
-                _averagesRepo.AddRange(ConvertToAverageEntity(data, tick));
-            }
-
+            _averagesRepo.AddRange(ConvertToAverageEntity(data, ticker));
         }
 
         private List<Averages> ConvertToAverageEntity(List<IResponse> dtoResults, Securities symbol)
@@ -91,8 +87,8 @@ namespace StockTracker.Business.Services
                         0,
                         0,
                         0,
-                        ma.EMA12,
-                        ma.EMA26 ?? 0
+                        ma.Ema12,
+                        ma.Ema26
                         )
                     );
                 }

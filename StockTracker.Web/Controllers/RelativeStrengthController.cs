@@ -1,48 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using StockTracker.Business.Services.Interfaces;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace StockTracker.Web.Controllers
+namespace StockTracker.WebApi.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class RSIController : Controller
+    public class RelativeStrengthController : ControllerBase
     {
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IRelativeStrengthService _relativeStrengthService;
+
+        public RelativeStrengthController(IRelativeStrengthService relativeStrengthService)
         {
-            return new string[] { "value1", "value2" };
+            _relativeStrengthService = relativeStrengthService;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("{symbol}")]
+        public async Task<IActionResult> CalculateRelativeStrength(string symbol)
         {
-            return "value";
-        }
+            await _relativeStrengthService.UpdateRsiForSymbol(symbol);
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string stockSymbol)
-        {
-
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 }
-

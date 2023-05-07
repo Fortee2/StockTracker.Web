@@ -20,6 +20,6 @@
     <PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.10" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StockTracker\Core\StockTracker.Core.csproj" />
+    <ProjectReference Include="..\StockTracker.Core.Entities\StockTracker.Core.Entities.csproj" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockTracker.Infrastructure.Investing;
 
@@ -10,9 +11,10 @@ using StockTracker.Infrastructure.Investing;
 namespace StockTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestingContext))]
-    partial class InvestingContextModelSnapshot : ModelSnapshot
+    [Migration("20230422130136_ActivityDate_RSI")]
+    partial class ActivityDate_RSI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,11 +31,6 @@ namespace StockTracker.Infrastructure.Migrations
                     b.Property<DateTime>("ActivityDate")
                         .HasColumnType("date")
                         .HasColumnName("activity_date");
-
-                    b.Property<string>("CandlePattern")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("candle_pattern");
 
                     b.Property<decimal>("Close")
                         .HasColumnType("decimal(9,4)")
@@ -83,7 +80,6 @@ namespace StockTracker.Infrastructure.Migrations
                         .HasColumnName("activity_date");
 
                     b.Property<string>("AverageType")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
                         .HasColumnName("average_type");
@@ -108,7 +104,6 @@ namespace StockTracker.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ActivityDescription")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
@@ -122,7 +117,7 @@ namespace StockTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobStatuses", (string)null);
+                    b.ToTable("JobStatuses");
                 });
 
             modelBuilder.Entity("StockTracker.Core.Entities.MovingAverages", b =>
@@ -152,7 +147,6 @@ namespace StockTracker.Infrastructure.Migrations
                         .HasColumnName("Signal");
 
                     b.Property<string>("Symbol")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("Symbol");
 
@@ -161,7 +155,6 @@ namespace StockTracker.Infrastructure.Migrations
                         .HasColumnName("Ticker_Id");
 
                     b.Property<string>("TickerName")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("Ticker_Name");
 

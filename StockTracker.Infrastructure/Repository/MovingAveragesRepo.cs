@@ -2,6 +2,7 @@
 using StockTracker.Infrastructure.Investing;
 using StockTracker.Core.Entities;
 using StockTracker.Infrastructure.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace StockTracker.Infrastructure.Repository
 {
@@ -14,22 +15,24 @@ namespace StockTracker.Infrastructure.Repository
 			_dbContext = dbContext;
 		}
 
-        public List<MovingAverages> GetPresetAverages(int ticker_id, DateTime start, DateTime end)
-        {
-			var data = (
-					from ma in _dbContext.MovingAverages
-					where ma.TickerId == ticker_id
-						&& ma.ActivityDate >= start
-						&& ma.ActivityDate <= end
-					select ma
-					);
+        public List<EmaResult> GetPresetAverages(int ticker_id, DateTime start, DateTime end)
+        {            
+            string sql = @"
+                SELECT ema12.ticker_id as tickerid, ema12.activity_date as activitydate, ema12.`value` as ema12, ema26.`value` as ema26
+                FROM investing.averages ema12
+                LEFT JOIN investing.averages ema26 ON ema12.ticker_id = ema26.ticker_id AND ema12.activity_date = ema26.activity_date
+                WHERE ema12.average_type = 'EMA12'
+                AND ema26.average_type = 'EMA26'
+                AND ema12.ticker_id = {0}";
 
-			return data.ToList();
+            var results = _dbContext.EmaResults.FromSqlRaw(String.Format(sql, ticker_id)).ToList();
+
+            return results;
         }
 
-        public MovingAverages FindById(int id)
+        public EmaResult FindById(int id)
         {
-            return _dbContext.Find<MovingAverages>(id);
+            throw new NotImplementedException();
         }
 
         public InvestingContext GetDbContext()

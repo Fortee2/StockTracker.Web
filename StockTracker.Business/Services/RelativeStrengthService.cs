@@ -59,9 +59,7 @@ namespace StockTracker.Business.Services
 
         public DateTime? RetrieveLast(int tickerId)
         {
-            using var dbContext = _activitiesRepo.GetDbContext();
-
-            var data = (from ema in dbContext.Rsis
+            var data = (from ema in _activitiesRepo.GetDbContext().Rsis
                         where ema.TickerId == tickerId
                         orderby ema.ActivityDate descending
                         select ema.ActivityDate
@@ -78,9 +76,7 @@ namespace StockTracker.Business.Services
 
             startTime = CalculateNewStartDate(securityId, startTime, 14);
 
-            using var dbContext = _activitiesRepo.GetDbContext();
-
-            var data = (from quotes in dbContext.Activities
+            var data = (from quotes in _activitiesRepo.GetDbContext().Activities
                         where (
                             quotes.TickerId == securityId
                                 && quotes.ActivityDate > startTime
@@ -95,10 +91,8 @@ namespace StockTracker.Business.Services
         }
 
         private DateTime CalculateNewStartDate(int securityId, DateTime lastUpdated, int interval)
-        {
-            using var dbContext = _activitiesRepo.GetDbContext();
-
-            var dateData = (from dates in dbContext.Activities
+        { 
+            var dateData = (from dates in _activitiesRepo.GetDbContext().Activities
                             where dates.TickerId == securityId && dates.ActivityDate < lastUpdated
                             orderby dates.ActivityDate descending
                             select dates.ActivityDate).Skip(interval * 2).Take(1).FirstOrDefault();

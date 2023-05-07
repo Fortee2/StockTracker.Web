@@ -23,9 +23,8 @@ namespace StockTracker.Infrastructure.Investing
         public virtual DbSet<Averages> Averages { get; set; }
         public virtual DbSet<Rsi> Rsis { get; set; }
         public virtual DbSet<Ticker> Tickers { get; set; }
-        public virtual DbSet<MovingAverages> MovingAverages { get; set; }
         public virtual DbSet<JobStatus> JobStatuses { get; set; }
-
+        public DbSet<EmaResult> EmaResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -71,6 +70,10 @@ namespace StockTracker.Infrastructure.Investing
                     .HasMaxLength(10)
                     .HasColumnName("updown");
 
+                entity.Property(e => e.CandlePattern)
+                    .HasMaxLength(50)
+                    .HasColumnName("candle_pattern");
+
                 entity.Property(e => e.Volume).HasColumnName("volume");
             });
 
@@ -102,6 +105,10 @@ namespace StockTracker.Infrastructure.Investing
                 entity.HasIndex(e => e.TickerId, "id_idx");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ActivityDate)
+                    .HasColumnType("date")
+                    .HasColumnName("activity_date");
 
                 entity.Property(e => e.AvgGain)
                     .HasColumnType("decimal(9,2)")
@@ -151,46 +158,10 @@ namespace StockTracker.Infrastructure.Investing
                     .HasColumnName("ticker_name");
             });
 
-            modelBuilder.Entity<MovingAverages>(entity =>
+            modelBuilder.Entity<EmaResult>(builder =>
             {
-                entity.Property(e => e.ActivityDate)
-                    .HasColumnName("Activity_Date");
-
-                entity.Property(e => e.TickerId)
-                    .HasColumnName("Ticker_Id");
-
-                entity.Property(e => e.TickerName)
-                    .HasColumnName("Ticker_Name");
-
-                entity.Property(e => e.Symbol)
-                    .HasColumnName("Symbol");
-
-                entity.Property(e => e.EMA12)
-                    .HasColumnType("decimal(9,2)")
-                    .HasColumnName("EMA12");
-
-                entity.Property(e => e.EMA26)
-                  .HasColumnType("decimal(9,2)")
-                  .HasColumnName("EMA26");
-
-                entity.Property(e => e.MA9)
-                    .HasColumnType("decimal(9,2)")
-                    .HasColumnName("MA9");
-
-                entity.Property(e => e.Vol90)
-                    .HasColumnType("decimal(9,2)")
-                    .HasColumnName("Vol90");
-
-                entity.Property(e => e.MACD)
-                    .HasColumnType("decimal(9,2)")
-                    .HasColumnName("MACD");
-
-                entity.Property(e => e.Signal)
-                    .HasColumnType("decimal(9,2)")
-                    .HasColumnName("Signal");
-
-                entity.HasNoKey();
-                entity.ToView("moving_averages");
+                builder.HasNoKey();
+                builder.ToView(null);
             });
 
             OnModelCreatingPartial(modelBuilder);

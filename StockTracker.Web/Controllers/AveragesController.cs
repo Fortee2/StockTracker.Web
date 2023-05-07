@@ -49,9 +49,9 @@ namespace StockTracker.Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult UpdateMACD()
+        public IActionResult UpdateMACD(string symbol)
         {
-            var tickers = _securitiesService.RetriveveAll();
+            var tickers = _securitiesService.FindSecurityBySymbol(symbol);
             _macdService.CalculateMACD(tickers);
 
             return Ok();

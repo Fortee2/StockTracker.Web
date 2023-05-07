@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockTracker.Infrastructure.Investing;
 
@@ -10,9 +11,10 @@ using StockTracker.Infrastructure.Investing;
 namespace StockTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestingContext))]
-    partial class InvestingContextModelSnapshot : ModelSnapshot
+    [Migration("20230505185701_table_update")]
+    partial class table_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,7 +124,7 @@ namespace StockTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobStatuses", (string)null);
+                    b.ToTable("JobStatuses");
                 });
 
             modelBuilder.Entity("StockTracker.Core.Entities.MovingAverages", b =>

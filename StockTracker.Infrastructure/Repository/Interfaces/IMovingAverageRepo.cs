@@ -3,9 +3,9 @@ using StockTracker.Core.Entities;
 
 namespace StockTracker.Infrastructure.Repository.Interfaces
 {
-	public interface IMovingAverageRepo:IRespository<MovingAverages>
+	public interface IMovingAverageRepo:IRespository<EmaResult>
 	{
-		List<MovingAverages> GetPresetAverages(int ticker_id, DateTime start, DateTime end);
+		List<EmaResult> GetPresetAverages(int ticker_id, DateTime start, DateTime end);
 	}
 }
 

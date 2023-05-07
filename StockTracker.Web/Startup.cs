@@ -45,8 +45,12 @@ namespace StockTracker.Web
             services.AddScoped<IChartService, ChartService>();
             services.AddScoped<IJobStatusRepo, JobStatusRepository>();
             services.AddScoped<IAveragesRepo, AveragesRepository>();
+            services.AddScoped<IRsiRepo, RelativeStrengthRepository>();
             services.AddScoped<IAverageService, AveragesService>();
             services.AddScoped<IMACDService, MACDService>();
+            services.AddScoped<IRelativeStrengthService, RelativeStrengthService>();
+            services.AddScoped<IHighLowService, HighLowService>();
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //services.AddHostedService<MovingAveragesBackgroundService>();

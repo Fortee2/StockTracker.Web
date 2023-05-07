@@ -5,7 +5,7 @@ namespace StockTracker.Business.Services.Interfaces
 {
 	public interface IMACDService
 	{
-        void CalculateMACD(List<Securities> tickers);
+        void CalculateMACD(Securities tickers);
     }
 }
 

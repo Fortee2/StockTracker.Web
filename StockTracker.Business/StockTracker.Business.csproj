@@ -22,5 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockTracker.Infrastructure\StockTracker.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\StockTracker\Core\StockTracker.Core.csproj" />
   </ItemGroup>
 </Project>
