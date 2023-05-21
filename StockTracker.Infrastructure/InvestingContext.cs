@@ -23,6 +23,7 @@ namespace StockTracker.Infrastructure.Investing
         public virtual DbSet<Averages> Averages { get; set; }
         public virtual DbSet<Rsi> Rsis { get; set; }
         public virtual DbSet<Ticker> Tickers { get; set; }
+        public virtual DbSet<IndustrySector> IndustrySectors { get; set; }
         public virtual DbSet<JobStatus> JobStatuses { get; set; }
         public DbSet<EmaResult> EmaResults { get; set; }
 
@@ -156,6 +157,22 @@ namespace StockTracker.Infrastructure.Investing
                 entity.Property(e => e.TickerName)
                     .HasMaxLength(45)
                     .HasColumnName("ticker_name");
+            });
+
+            modelBuilder.Entity<IndustrySector>(entity =>
+            {
+                entity.ToTable("industry");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Industry)
+                    .HasMaxLength(100)
+                    .HasColumnName("industry");
+
+                entity.Property(e => e.Sector)
+                    .HasMaxLength(100)
+                    .HasColumnName("sector");
+
             });
 
             modelBuilder.Entity<EmaResult>(builder =>
