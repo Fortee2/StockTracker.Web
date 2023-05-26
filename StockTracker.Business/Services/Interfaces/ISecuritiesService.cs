@@ -8,6 +8,7 @@ namespace StockTracker.Business.Services.Interfaces
 	{
         List<Securities> RetriveveAll();
         Securities? FindSecurityBySymbol(string symbol);
+        List<Securities> FindSecurityByIndustry(string industry);
     }
 }
 

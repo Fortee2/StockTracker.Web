@@ -6,8 +6,6 @@ using StockTracker.Business.Enumerations;
 using StockTracker.Business.Services.Interfaces;
 using StockTracker.Infrastructure.Repository.Interfaces;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace StockTracker.Web.Controllers
 {
     [Route("api/[controller]")]
@@ -56,6 +54,18 @@ namespace StockTracker.Web.Controllers
 
             return Ok();
         }
+
+        [HttpGet("[action]")]
+        public IActionResult UpdateIndustryAverages(string industry)
+        {
+            var tickers = _securitiesService.FindSecurityByIndustry(industry);
+            _averageService.CalculateIndustryAverages(tickers);
+
+            return Ok();
+        }
+
+
     }
+    
 }
 

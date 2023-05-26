@@ -36,6 +36,18 @@ namespace StockTracker.Business.Services
 
             return (security == null)? null : _map.Map<Ticker, Securities>(security);
 		}
+
+		public List<Securities> FindSecurityByIndustry(string industry)
+		{
+			if(industry.Trim() == "")
+			{
+				throw new Exception("Industry can not be blank.");
+			}
+
+			var securities = _repo.FindSecurityByIndstry(industry);
+
+			return _map.Map<IList<Ticker>, List<Securities>>(securities);
+		}
 	}
 }
 

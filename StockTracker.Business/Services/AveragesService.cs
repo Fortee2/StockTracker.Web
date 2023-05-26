@@ -210,7 +210,6 @@ namespace StockTracker.Business.Services
 
             return averageRange;
         }
-
         private void LoadDictionary()
         {
             _hashTable.Add(AverageTypes.VOL90, 90);
@@ -299,7 +298,10 @@ namespace StockTracker.Business.Services
             return dateData.ElementAt(calcuatePosition);
         }
 
-
+        public Task CalculateIndustryAverages(List<Securities> tickers)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

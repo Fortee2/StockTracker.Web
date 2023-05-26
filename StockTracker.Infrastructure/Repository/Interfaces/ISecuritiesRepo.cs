@@ -8,5 +8,6 @@ namespace StockTracker.Infrastructure.Repository.Interfaces
     {
         List<Ticker> RetriveveAll();
         Ticker? FindBySymbol(string symbol);
+        List<Ticker> FindSecurityByIndstry(string symbol);
     }
 }

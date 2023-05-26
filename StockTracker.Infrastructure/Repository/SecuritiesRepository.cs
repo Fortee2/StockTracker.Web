@@ -35,6 +35,15 @@ namespace StockTracker.Infrastructure.Repository
 
             return tickers.ToList();
         }
+
+        public List<Ticker> FindSecurityByIndstry(string industry)
+        {
+            var tickers = from symbols in _dbContext.Tickers
+                          where symbols.Industry.ToUpper() == industry.ToUpper()
+                          select symbols;
+
+            return tickers.ToList();
+        }
     }
 }
 
