@@ -25,6 +25,7 @@ namespace StockTracker.Infrastructure.Investing
         public virtual DbSet<Ticker> Tickers { get; set; }
         public virtual DbSet<IndustrySector> IndustrySectors { get; set; }
         public virtual DbSet<JobStatus> JobStatuses { get; set; }
+        public virtual DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<EmaResult> EmaResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -157,6 +158,9 @@ namespace StockTracker.Infrastructure.Investing
                 entity.Property(e => e.TickerName)
                     .HasMaxLength(45)
                     .HasColumnName("ticker_name");
+                
+                entity.Property(e => e.Active)
+                    .HasColumnName("active");
             });
 
             modelBuilder.Entity<IndustrySector>(entity =>
@@ -173,6 +177,22 @@ namespace StockTracker.Infrastructure.Investing
                     .HasMaxLength(100)
                     .HasColumnName("sector");
 
+            });
+
+            modelBuilder.Entity<Portfolio>(entity =>
+            {
+                entity.ToTable("portfolio");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.TickerId).HasColumnName("ticker_id");
+
+                entity.Property(e => e.Active)
+                    .HasColumnName("active");
+
+                entity.Property(e => e.DateAdded)
+                    .HasColumnType("date")
+                    .HasColumnName("date_added");
             });
 
             modelBuilder.Entity<EmaResult>(builder =>

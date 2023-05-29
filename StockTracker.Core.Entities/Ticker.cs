@@ -17,6 +17,7 @@ namespace StockTracker.Core.Entities
         public string TickerName { get; set; }
         public string Industry { get; set; }
         public string Sector { get; set; }
+        public bool Active { get; set; }
 
         public virtual ICollection<Rsi> Rsis { get; set; }
     }
