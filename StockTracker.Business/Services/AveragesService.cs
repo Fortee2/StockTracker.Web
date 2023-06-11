@@ -53,9 +53,9 @@ namespace StockTracker.Business.Services
 			return dtos;
         }
 
-		public List<IResponse> CalculateMoveingAverage(List<MADto> MAs, ushort numberOfPeriods)
+		public List<AverageResponse> CalculateMoveingAverage(List<MADto> MAs, ushort numberOfPeriods)
 		{
-            if (MAs.Count == 0) return new List<IResponse>();
+            if (MAs.Count == 0) return new List<AverageResponse>();
 
             List<ITradingStructure> mAData = new();
             mAData.AddRange(_mapper.Map<List<MADto>, List<MAData>>(MAs));
@@ -193,7 +193,7 @@ namespace StockTracker.Business.Services
             return averageRange;
         }
 
-        private List<Averages> ConvertToAverageEntity(List<IResponse> dtoResults, Securities symbol, AverageTypes averageTypes)
+        private List<Averages> ConvertToAverageEntity(List<AverageResponse> dtoResults, Securities symbol, AverageTypes averageTypes)
         {
             List<Averages> averageRange = new List<Averages>();
 

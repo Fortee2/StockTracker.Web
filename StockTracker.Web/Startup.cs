@@ -45,6 +45,8 @@ namespace StockTracker.Web
             services.AddScoped<IChartService, ChartService>();
             services.AddScoped<IJobStatusRepo, JobStatusRepository>();
             services.AddScoped<IAveragesRepo, AveragesRepository>();
+            services.AddScoped<IPortfolioRepo, PortfolioRepository>();
+            services.AddScoped<IPriceDirectionRepo, PriceDirectionRepository>();
             services.AddScoped<IIndustrySectorRepo, IndustrySectorRepository>();
             services.AddScoped<IRsiRepo, RelativeStrengthRepository>();
             services.AddScoped<IAverageService, AveragesService>();

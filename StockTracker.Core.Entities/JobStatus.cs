@@ -5,6 +5,13 @@ namespace StockTracker.Core.Entities
 {
     public class JobStatus
     {
+        public JobStatus()
+        {
+            JobName = string.Empty;
+            ActivityTime = DateTime.Now;
+            ActivityDescription = string.Empty;
+        }
+        
         [Key]
         public int Id { get; set; }
 

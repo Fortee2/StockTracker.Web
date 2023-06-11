@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockTracker.Infrastructure.Investing;
 
@@ -10,9 +11,10 @@ using StockTracker.Infrastructure.Investing;
 namespace StockTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestingContext))]
-    partial class InvestingContextModelSnapshot : ModelSnapshot
+    [Migration("20230610221451_add_priceDirection")]
+    partial class add_priceDirection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

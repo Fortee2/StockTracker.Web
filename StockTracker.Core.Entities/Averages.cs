@@ -3,7 +3,12 @@ namespace StockTracker.Core.Entities
 {
     public partial class Averages
     {
-
+        public Averages()
+        {
+            ActivityDate = System.DateTime.Now;
+            AverageType = string.Empty;
+        }
+        
         public int? Id { get; set; }
         public int TickerId { get; set; }
         public DateTime ActivityDate { get; set; }

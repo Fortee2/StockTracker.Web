@@ -26,6 +26,7 @@ namespace StockTracker.Infrastructure.Investing
         public virtual DbSet<IndustrySector> IndustrySectors { get; set; }
         public virtual DbSet<JobStatus> JobStatuses { get; set; }
         public virtual DbSet<Portfolio> Portfolios { get; set; }
+        public virtual DbSet<PriceDirection> PriceDirections { get; set; }
         public DbSet<EmaResult> EmaResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -77,6 +78,25 @@ namespace StockTracker.Infrastructure.Investing
                     .HasColumnName("candle_pattern");
 
                 entity.Property(e => e.Volume).HasColumnName("volume");
+            });
+
+            modelBuilder.Entity<PriceDirection>(entity =>
+            {
+                entity.ToTable("price_direction");
+
+                entity.HasIndex(e => e.TickerId, "id_idx");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ActivityDate)
+                    .HasColumnType("date")
+                    .HasColumnName("date_added");
+
+                entity.Property(e => e.Direction)
+                    .HasMaxLength(10)
+                    .HasColumnName("direction");
+
+                entity.Property(e => e.TickerId).HasColumnName("ticker_id");
             });
 
             modelBuilder.Entity<Averages>(entity =>

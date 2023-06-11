@@ -41,12 +41,12 @@ namespace StockTracker.Business.Services
             mACD.MACDColumn = "MACD";
             mACD.SignalColumn = "Signal";
 
-            List<IResponse> data = mACD.Calculate();
+            List<MacdResponse> data = mACD.Calculate();
 
             _averagesRepo.AddRange(ConvertToAverageEntity(data, ticker));
         }
 
-        private List<Averages> ConvertToAverageEntity(List<IResponse> dtoResults, Securities symbol)
+        private List<Averages> ConvertToAverageEntity(List<MacdResponse> dtoResults, Securities symbol)
         {
             List<Averages> averageRange = new List<Averages>();
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SecuritiesForm from './Form';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -10,10 +9,6 @@ const mapStateToProps = (state) => {
   }
 
   class SecuritiesList extends Component{
-    constructor(props) {
-        super(props);
-    
-    }
     
     renderTable() {
         return (

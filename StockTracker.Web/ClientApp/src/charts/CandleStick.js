@@ -20,23 +20,9 @@ export class CandleStickChart extends Component{
         this.state = {chartData:[]};
     }
 
-    componentDidMount(){
-
-    }
-
     selectedSymbol(ticker){
-        console.log('Ticker ID in callback: ' + ticker);
         this.retrieveData(ticker);
     }
-    
-    objectToArray = obj => {
-        const keys = Object.keys(obj);
-        const res = [];
-        for(let i = 0; i < keys.length; i++){
-           res.push(obj[keys[i]]);
-        };
-        return res;
-     };
 
     retrieveData(ticker){
         fetch('api/candlestick/' + ticker)
@@ -57,6 +43,7 @@ export class CandleStickChart extends Component{
                     line.push(a.high);
 
                     collector.push(line);
+                    return true
                 }  );
                 console.log(collector);
                 this.setState({chartData: collector});  
@@ -78,13 +65,10 @@ export class CandleStickChart extends Component{
             }
 
         return(
-
-
             <Fragment>
                 <StockSymbolsList callback={(e) => this.selectedSymbol(e)}  />
                 {chartBody}
             </Fragment>
-
         )
     }
 

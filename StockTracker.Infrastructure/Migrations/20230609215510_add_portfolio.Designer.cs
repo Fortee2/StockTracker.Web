@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockTracker.Infrastructure.Investing;
 
@@ -10,9 +11,10 @@ using StockTracker.Infrastructure.Investing;
 namespace StockTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestingContext))]
-    partial class InvestingContextModelSnapshot : ModelSnapshot
+    [Migration("20230609215510_add_portfolio")]
+    partial class add_portfolio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,34 +194,6 @@ namespace StockTracker.Infrastructure.Migrations
                     b.ToTable("portfolio", (string)null);
                 });
 
-            modelBuilder.Entity("StockTracker.Core.Entities.PriceDirection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("ActivityDate")
-                        .HasColumnType("date")
-                        .HasColumnName("date_added");
-
-                    b.Property<string>("Direction")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("direction");
-
-                    b.Property<int>("TickerId")
-                        .HasColumnType("int")
-                        .HasColumnName("ticker_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "TickerId" }, "id_idx");
-
-                    b.ToTable("price_direction", (string)null);
-                });
-
             modelBuilder.Entity("StockTracker.Core.Entities.Rsi", b =>
                 {
                     b.Property<int>("Id")
@@ -253,8 +227,7 @@ namespace StockTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "TickerId" }, "id_idx")
-                        .HasDatabaseName("id_idx1");
+                    b.HasIndex(new[] { "TickerId" }, "id_idx");
 
                     b.ToTable("rsi", (string)null);
                 });
@@ -296,17 +269,6 @@ namespace StockTracker.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("StockTracker.Core.Entities.Portfolio", b =>
-                {
-                    b.HasOne("StockTracker.Core.Entities.Ticker", "Ticker")
-                        .WithMany()
-                        .HasForeignKey("TickerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ticker");
-                });
-
-            modelBuilder.Entity("StockTracker.Core.Entities.PriceDirection", b =>
                 {
                     b.HasOne("StockTracker.Core.Entities.Ticker", "Ticker")
                         .WithMany()
