@@ -15,7 +15,6 @@ namespace StockTracker.Business.Services.Interfaces
         Task CalculateAllAverages(List<Securities> tickers);
         Task CalculateIndustryAverages(List<Securities> tickers);
         Task CalculateAllAveragesBySymbol(Securities ticker);
-
         MADto? RetrieveLastAverage(int tickerId, AverageTypes averageType);
         List<MADto> RetrieveDataForAverageCalculations(int tickerId, AverageTypes averageType, MADto? lastUpdate);
     }

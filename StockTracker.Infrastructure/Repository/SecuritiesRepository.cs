@@ -31,6 +31,7 @@ namespace StockTracker.Infrastructure.Repository
         public List<Ticker> RetriveveAll()
         {
             var tickers =  from symbols in _dbContext.Tickers
+                            where symbols.Active == true
                             select symbols;
 
             return tickers.ToList();
